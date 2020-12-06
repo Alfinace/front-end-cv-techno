@@ -1,0 +1,66 @@
+.content{
+   justify-content: space-between;
+    display:flex;
+    padding-left:70px;
+    padding-right: 80px;
+    flex-direction: row;
+    margin-top: 100px;
+}
+form{
+    width:400px;
+    border-radius:3px;
+    padding:30px;
+    transform: scale(0.75);
+    margin-top:50px;
+    height: 320px;
+    /* border: 1px solid  rgb(94, 9, 72); */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
+    
+}
+.content-action{
+    display:flex;
+    flex-direction:row ;
+    justify-content: space-between;
+}
+img{
+    width:450px;
+    height: 400px;
+    opacity:0.8;
+    margin-top:-50px;
+    animation: bouge 2s linear 0s infinite alternate ;
+}
+@keyframes bouge {
+    0% {transform: translateY(0);opacity: 0.8}
+    50% {transform: translateY(20px);opacity:0.5}
+    100% {transform:translateY(0);opacity: 0.8}
+}
+.theme{
+    background: rgb(179, 50, 140);
+    text-align: center;
+    width: 100%;
+    justify-content: center;
+    padding-left: 70px;
+    margin-top:-15px;
+    margin-left:-45%;
+    transform: rotate(-45deg) scale(0.5);
+    height: 50px;
+    position: absolute;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-top:10px;
+    font-size:20px;
+    color: white
+}
+input{
+    width: 100%;
+    background: none;
+    border: 1px solid rgb(94, 9, 72);
+    padding:10px;
+    color:#fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding-left:20px
+}
+h1{
+    font-family: "Helvetica Neue",Helvetica,Arial
+}
