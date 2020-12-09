@@ -1,27 +1,29 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
-    </mat-nav-list>s
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>front-end</span>
-    </mat-toolbar>
-    <!-- Add Content Here -->
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="sidenav-container">
+   <div class="sidenav">
+afdf
+   </div>
+   <div class="sidenav-content">
+       <nav class="navbar navbar-expand  bg-faded">
+           <a class="navbar-brand" href="#">Navbar</a>
+           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+               <li class="nav-item active">
+                   <a class="nav-link" href="#">Active <span class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="#">Link</a>
+               </li>
+               <li class="nav-item dropdown">
+                   <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                   <div class="dropdown-menu" aria-labelledby="dropdownId">
+                       <a class="dropdown-item" href="#">Action 1</a>
+                       <a class="dropdown-item" href="#">Action 2</a>
+                   </div>
+               </li>
+           </ul>
+          <button type="button" class="btn btn-danger" (click)="logout()">
+              logout
+          </button>
+       </nav>
+fdfsdfd
+   </div>
+</div>

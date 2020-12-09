@@ -1,5 +1,9 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { WebRequestService } from '../../services/web-request.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,15 +13,30 @@ import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 export class SignInComponent implements OnInit {
   email: string;
   password: string;
-  constructor() { }
+  message = null;
+  defaultValueEmail = null;
+  defaultValuePassword = null;
+  constructor(private userService: UserService,
+              private router: Router
+              ){ }
 
   ngOnInit(): void {
-
+    if (this.userService.getAccessToken()) {
+      this.router.navigateByUrl('/admin');
+    }
   }
-
   onSubmit(formulaire: NgForm): void {
-    console.log(formulaire.value.email);
-    console.log(formulaire.value.password);
+    this.userService.login(formulaire.value._email, formulaire.value._password).subscribe((res: HttpResponse<any>) => {
+      this.router.navigateByUrl('/admin');
+    }, (err: any) => {
+      if (err.status === 401) {
+        this.message = err.error.error;
+        formulaire.onReset();
+        setTimeout(() => {
+          this.message = null;
+        }, 5000);
+      }
+    });
   }
 
 }

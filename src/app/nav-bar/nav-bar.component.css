@@ -1,17 +1,17 @@
 .sidenav-container {
   height: 100%;
+  display: flex;
+  flex-direction: row;
 }
+.sidenav{
+  width: 150px;
+  background-color: rgb(10, 1, 19);
+  height: 700px;
 
-.sidenav {
-  width: 200px;
+
 }
+.sidenav-content{
+  background-color: rgb(55, 5, 59);
+  width: 100%;
 
-.sidenav .mat-toolbar {
-  background: inherit;
-}
-
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
 }
