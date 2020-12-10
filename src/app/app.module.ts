@@ -15,6 +15,10 @@ import { UserComponent } from './user/user.component';
 import { WebRequestService } from './services/web-request.service';
 import { UserService } from './services/user.service';
 import { AuthGuard } from './_helpers/auth.guard';
+import { ListProduitComponent } from './produit/list-produit/list-produit.component';
+import { AddProduitComponent } from './produit/add-produit/add-produit.component';
+import { UpdateProduitComponent } from './produit/update-produit/update-produit.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +26,10 @@ import { AuthGuard } from './_helpers/auth.guard';
     SignInComponent,
     SignUpComponent,
     UserComponent,
+    ListProduitComponent,
+    AddProduitComponent,
+    UpdateProduitComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

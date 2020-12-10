@@ -1,37 +1,16 @@
-<div class="sidenav-container">
-   <div class="sidenav">
-       <div class="logo">
-
-       </div>
-       <div class="list-group">
-           <a href="#" class="list-group-item list-group-item-action active">Produit</a>
-           <a href="#" class="list-group-item list-group-item-action">Client</a>
-           <a href="#" class="list-group-item list-group-item-action disabled">Commande</a>
-       </div>
-   </div>
-   <div class="sidenav-content">
-       <nav class="navbar navbar-expand">
-           <a class="navbar-brand" href="#">Navbar</a>
-           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-               <li class="nav-item active">
-                   <a class="nav-link" href="#">Active <span class="sr-only">(current)</span></a>
-               </li>
-               <li class="nav-item">
-                   <a class="nav-link" href="#">Link</a>
-               </li>
-               <li class="nav-item dropdown">
-                   <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                   <div class="dropdown-menu" aria-labelledby="dropdownId">
-                       <a class="dropdown-item" href="#">Action 1</a>
-                       <a class="dropdown-item" href="#">Action 2</a>
-                   </div>
-               </li>
-           </ul>
-          <button type="button" class="btn btn-danger" (click)="logout()">
-              logout
-          </button>
-       </nav>
-fdfsdfd
-       <app-user></app-user>
-   </div>
-</div>
+<nav class="navbar navbar-expand shadow">
+    <a class="navbar-brand text-uppercase" href="#">Gestion de commande</a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/client']" routerLinkActive="router-link-active" >CLIENT</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/produit']" routerLinkActive="router-link-active">PRODUIT</a>
+        </li><li class="nav-item">
+            <a class="nav-link" href="#">COMMANDE</a>
+        </li>
+    </ul>
+    <button type="button" class="btn btn-danger btn-sm" (click)="logout()">
+        Deconnection
+    </button>
+</nav>

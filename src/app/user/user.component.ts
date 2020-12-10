@@ -13,7 +13,7 @@ users: User[];
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.userService.getAllUser(2, 7).subscribe((observe: any) => {
+    this.userService.getAllUser().subscribe((observe: any) => {
       console.log(observe.data);
       const data = observe.data;
       this.users = data.rows;
