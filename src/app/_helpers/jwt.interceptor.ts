@@ -18,15 +18,17 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     console.log('Interception In Progress'); // SECTION 1
     const token: string = localStorage.getItem('x-access-token');
-    req = req.clone({ headers: req.headers.set('Authorization',token) });
-    req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
-    req = req.clone({ headers: req.headers.set('Accept', 'application/json') });
-
-    return next.handle(req).pipe(
+    const tokenizedReq = req.clone({
+        setHeaders: {
+          Authorization: 'Bearer ' + token
+        }
+    });
+    return next.handle(tokenizedReq).pipe(
       catchError((error: HttpErrorResponse) => {
         // 401 UNAUTHORIZED - SECTION 2
         if (error && error.status === 401) {
           console.log('ERROR 401 UNAUTHORIZED');
+          this.userService.logout();
         }
         const err = error.error.message || error.statusText;
         return throwError(error);

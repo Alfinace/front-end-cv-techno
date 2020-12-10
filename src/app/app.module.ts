@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { UserComponent } from './user/user.component';
+import { WebRequestService } from './services/web-request.service';
+import { UserService } from './services/user.service';
+import { AuthGuard } from './_helpers/auth.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,11 +31,14 @@ import { UserComponent } from './user/user.component';
     HttpClientModule
   ],
   providers: [
-  //   {
-  //   provide: HTTP_INTERCEPTORS,
-  //   useClass: JwtInterceptor,
-  //   multi: true
-  // }
+    WebRequestService,
+    AuthGuard,
+    UserService,
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi: true
+  }
 ],
   bootstrap: [AppComponent]
 })

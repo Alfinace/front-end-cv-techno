@@ -22,7 +22,7 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userService.getAccessToken()) {
-      this.router.navigateByUrl('/admin');
+        this.router.navigateByUrl('/admin');
     }
   }
   onSubmit(formulaire: NgForm): void {
