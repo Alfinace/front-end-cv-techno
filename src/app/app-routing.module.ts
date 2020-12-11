@@ -9,10 +9,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent, canActivate:[AuthGuard]},
-  {path: 'admin', component: DashboardComponent, canActivate:[AuthGuard]},
-  {path: 'produit', component: ListProduitComponent, canActivate:[AuthGuard]},
-  {path: 'client', component: ListProduitComponent, canActivate:[AuthGuard]},
+  {path: '', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'admin', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'produit/list', component: ListProduitComponent, canActivate: [AuthGuard]},
+  {path: 'client', component: ListProduitComponent, canActivate: [AuthGuard]},
   {path: 'login', component: SignInComponent},
   {path: 'register', component: SignUpComponent}
 ];

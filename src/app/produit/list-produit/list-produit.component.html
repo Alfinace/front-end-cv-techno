@@ -1,22 +1,22 @@
-<div class="container-fluid" style="display: flex;flex-direction: row;">
-    <div class="tableau card" style="transform: scale(0.7);">
-      <table class="table .table-hover">
-          <thead>
+<div class="container-fluid" style="transform: scale(0.8);padding-left:20px;display: flex;flex-direction: row;">
+    <div class="tableau card ">
+      <table class="table .table-hover table-bordered">
+          <thead class="text-center">
               <th>Numero</th>
               <th>Designation</th>
               <th>Stock</th>
               <th>Prix Unitaire</th>
-              <th rowspan="3">Action</th>
+              <th colspan="3">Actions</th>
           </thead>
-          <tbody>
+          <tbody class="text-center">
               <tr *ngFor="let produit of produits">
                 <td>{{ produit.id }}</td>
                 <td>{{ produit.design }}</td>
                 <td>{{ produit.stock }}</td>
                 <td>{{ produit.pu }}</td>
                 <td><a  class="btn btn-sm btn-primary" (click)="viewItem(produit.id)">Voir</a></td>
-                <td><a href="#" class="btn btn-sm btn-default" (click)="editItem(produit.id)">Modifier</a></td>
-                <td><a href="#" class="btn btn-sm btn-danger" (click)="deleteItem(produit.id)">Supprimer</a></td>
+                <td><a  class="btn btn-sm btn-default" (click)="editItem(produit.id)">Modifier</a></td>
+                <td><a class="btn btn-sm btn-danger" (click)="deleteItem(produit.id)">Supprimer</a></td>
                 
               </tr>
           </tbody>
@@ -28,12 +28,8 @@
       </ul>
     </div>
     <div>
-        <div class="card border-primary">
-          <img class="card-img-top" src="holder.js/100px180/" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Title</h4>
-            <p class="card-text">Text</p>
-          </div>
+        <div class="card border-primary bg-dark" [ngStyle]="{padding: '10px'}">
+         <app-add-produit></app-add-produit>
         </div>
     </div>
 </div>

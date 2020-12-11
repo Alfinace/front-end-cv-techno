@@ -3,6 +3,7 @@ import { ProduitService } from '../../services/produit.service';
 import { Produit } from '../../models/produit';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-produit',
@@ -17,20 +18,34 @@ export class ListProduitComponent implements OnInit {
   btnPrev: boolean;
   btnNext = true;
   constructor(private produitService: ProduitService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private activedRoute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.currentPage = 1;
+    this.activedRoute.queryParams.subscribe(
+      (params) => {
+        // tslint:disable-next-line: radix
+        // tslint:disable-next-line: use-isnan
+        // tslint:disable-next-line: radix
+        this.currentPage =  1;
+
+      },
+      // tslint:disable-next-line: no-shadowed-variable
+      (error) => console.log(error)
+
+
+    );
     this.getList(this.currentPage);
   }
 
-  getNextListProduit(){    
-    let page = this.currentPage +1;
+  getNextListProduit(){
+    const page = this.currentPage + 1;
     if (page <= this.pages.length) {
       this.getList(page);
     }
   }
-  getPrevListProduit(){    
+  getPrevListProduit(){
     this.getList(this.currentPage - 1 );
   }
    getListProduit(page: number){
@@ -41,7 +56,7 @@ export class ListProduitComponent implements OnInit {
       (observe: any) => {
         const data = observe.data.rows;
         this.produits = data;
-        this.limit = data.length;
+        this.limit = 5;
         // tslint:disable-next-line: radix
         let pages = parseInt(observe.data.count) / this.limit;
         // tslint:disable-next-line: radix
@@ -56,13 +71,12 @@ export class ListProduitComponent implements OnInit {
         this.pages = element;
         this.currentPage = page;
         console.log(page < this.pages.length);
-        
+
         if (page < this.pages.length) {
           this.btnNext = true;
         }else{
-          this.btnNext = false
+          this.btnNext = false;
         }
-
       },
       (error: HttpErrorResponse) => {
         if (error.status === 401 ){
@@ -79,7 +93,16 @@ alert(id);
 
   }
   deleteItem(id: number): void {
+    this.produitService.deleteOneProduit(id).subscribe(
+      (res) => {
+        this.getList(this.currentPage);
+      },
+      // tslint:disable-next-line: no-shadowed-variable
+      (error: any) => {
+        console.log(error);
 
+      }
+    );
   }
 
 

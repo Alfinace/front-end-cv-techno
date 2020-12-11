@@ -11,5 +11,8 @@ export class AddProduitComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  onSubmit(){
+    
+  }
 
 }
