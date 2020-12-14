@@ -19,6 +19,15 @@ import { ListProduitComponent } from './produit/list-produit/list-produit.compon
 import { AddProduitComponent } from './produit/add-produit/add-produit.component';
 import { UpdateProduitComponent } from './produit/update-produit/update-produit.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProduitService } from './services/produit.service';
+import { ListClientComponent } from './client/list-client/list-client.component';
+import { AddClientComponent } from './client/add-client/add-client.component';
+import { UpdateClientComponent } from './client/update-client/update-client.component';
+import { ChoixClientComponent } from './commande/choix-client/choix-client.component';
+import { AddCommandeComponent } from './commande/add-commande/add-commande.component';
+import { ListPanierComponent } from './commande/list-panier/list-panier.component';
+import { CommandeComponent } from './commande/commande/commande.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,18 +39,27 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AddProduitComponent,
     UpdateProduitComponent,
     DashboardComponent,
+    ListClientComponent,
+    AddClientComponent,
+    UpdateClientComponent,
+    ChoixClientComponent,
+    AddCommandeComponent,
+    ListPanierComponent,
+    CommandeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     WebRequestService,
     AuthGuard,
     UserService,
+    ProduitService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,

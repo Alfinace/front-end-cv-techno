@@ -1,0 +1,19 @@
+<div>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <h4 class=" text-uppercase text-center font-weight-bold	">Edit un client</h4>
+      <hr>
+        <div class="form-group">
+          <input type="text"
+            class="form-control form-control-sm" name="lastName" [(ngModel)]=" clientEdit.name.split(' ')[0] " required  aria-describedby="helpId" placeholder="Nom">
+        </div>
+        <div class="form-group">
+            <input type="text"
+              class="form-control form-control-sm" name="firstName" [(ngModel)]=" clientEdit.name.split(' ')[1] "  required  aria-describedby="helpId" placeholder="Prénom">
+          </div>
+        <div class="form-group">
+            <input type="text"
+              class="form-control form-control-sm" name="contact" [(ngModel)]=" clientEdit.contact " required id="" aria-describedby="helpId" placeholder="Numéro téléphonique">
+          </div>
+          <button type="submit"  class="btn btn-primary btn-block btn-sm">Mettre à jour</button>
+    </form>
+</div>

@@ -1,0 +1,9 @@
+label{
+    color: rgb(70, 8, 56);
+    font-weight: bold;
+    font-size: 11px;
+
+}
+.btn:active{
+    transform: scale(0.8);
+}

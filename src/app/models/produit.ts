@@ -1,5 +1,5 @@
 export class Produit {
-    id: number;
+    id?: number;
     design: string;
     pu: number;
     stock: number;

@@ -13,6 +13,9 @@ export class ProduitService {
     return this.webReqService.put(`produit/${id}/edit`, produit);
   }
 
+  addProduit(produit: Produit) {
+    return this.webReqService.post(`produit`,produit);
+  }
   deleteOneProduit(id: number){
     return  this.webReqService.delete(`produit/${id}`);
   }
@@ -21,7 +24,7 @@ export class ProduitService {
   return  this.webReqService.get(`produit/${id}`);
   }
   
-  getAllUser(page?: number, limit?: number){
+  getAllProduit(page?: number, limit?: number){
     return this.webReqService.get(`produit/list?page=${page}&limit=${limit}`);
   }
 }
