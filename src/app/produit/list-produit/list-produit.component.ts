@@ -4,7 +4,6 @@ import { Produit } from '../../models/produit';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppPage } from '../../../../e2e/src/app.po';
 
 @Component({
   selector: 'app-list-produit',

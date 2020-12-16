@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -12,9 +12,7 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-
   constructor(private userService: UserService) {}
-
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     console.log('Interception In Progress'); // SECTION 1
     const token: string = localStorage.getItem('x-access-token');

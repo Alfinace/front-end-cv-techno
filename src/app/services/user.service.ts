@@ -9,7 +9,7 @@ import { WebRequestService } from './web-request.service';
   providedIn: 'root'
 })
 export class UserService {
-  private logged: boolean;
+  private isLogged: boolean;
   constructor(private webReqService: WebRequestService,
               private router: Router) { }
   register(user: User){
@@ -62,4 +62,10 @@ getAccessToken(): string {
     localStorage.removeItem('x-access-token');
   }
 
+  setLoggleShowHeader(value :boolean){
+    this.isLogged = value
+  }
+  getCheck(): boolean{
+    return this.isLogged
+  }
 }

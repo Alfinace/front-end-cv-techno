@@ -1,10 +1,7 @@
-<div class="progress" style="width: 80%;margin:  5% auto;transform: scale(1.2);">
-    <div class="progress-bar bg-success" style="width:{{taille}}%">
-      {{taille}}% {{ step }}
-    </div>
-    
-  </div>
-<div style="display: grid;grid-template-columns:1;justify-content: center;">
-    <app-choix-client *ngIf="step === 0" (eventNextStep)="nextStep($event)"></app-choix-client>
-    <app-add-commande *ngIf="step === 1"></app-add-commande>
+
+<div *ngIf="step === 0" style="display: grid;grid-template-columns:auto auto;justify-content: center;">
+    <app-choix-client  (eventNextStep)="nextStep($event)"></app-choix-client>
+</div>
+<div *ngIf="step === 1" class="container">
+  <app-add-commande ></app-add-commande>
 </div>

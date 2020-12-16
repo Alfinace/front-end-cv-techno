@@ -10,7 +10,7 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
-
+  isLogged : boolean;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -24,5 +24,8 @@ export class NavBarComponent {
     this.userService.logout();
   }
 
+  setLoggleShowHeader(){
+    this.isLogged = this.userService.getCheck()
+   }
 
 }
