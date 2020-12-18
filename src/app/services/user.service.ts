@@ -10,7 +10,7 @@ import { WebRequestService } from './web-request.service';
   providedIn: 'root'
 })
 export class UserService {
-  private loggedIn = new BehaviorSubject<boolean>(false);
+  private loggedIn = new BehaviorSubject<boolean>(this.getAccessToken() === null ? false: true);
 
   get isLoggedIn(){
     return this.loggedIn.asObservable()
@@ -34,8 +34,6 @@ export class UserService {
       })
     );
   }
-
-  
   logout(){
     this.removeSession();
     this.loggedIn.next(false)
