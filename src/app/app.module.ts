@@ -28,6 +28,7 @@ import { AddCommandeComponent } from './commande/add-commande/add-commande.compo
 import { ListPanierComponent } from './commande/list-panier/list-panier.component';
 import { CommandeComponent } from './commande/commande/commande.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommandeService } from './services/commande.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,6 +61,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AuthGuard,
     UserService,
     ProduitService,
+    CommandeService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,

@@ -1,6 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { shareReplay, tap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { WebRequestService } from './web-request.service';
@@ -9,9 +10,15 @@ import { WebRequestService } from './web-request.service';
   providedIn: 'root'
 })
 export class UserService {
-  private isLogged: boolean;
+  private loggedIn = new BehaviorSubject<boolean>(false);
+
+  get isLoggedIn(){
+    return this.loggedIn.asObservable()
+  }
   constructor(private webReqService: WebRequestService,
               private router: Router) { }
+
+
   register(user: User){
     return this.webReqService.post('registration', user);
   }
@@ -19,18 +26,23 @@ export class UserService {
     return this.webReqService.login(email, password).pipe(
       shareReplay(),
       tap((res: HttpResponse<any>) => {
-        this.setSession(res.body.userId, res.body.token);
+        if (res.status === 200) {
+          this.setSession(res.body.userId, res.body.token);
+          this.loggedIn.next(true);
+          this.router.navigate(['/']);
+        }
       })
     );
   }
 
-  isLoggedIn(): string {
-    return this.getAccessToken();
-  }
+  
   logout(){
     this.removeSession();
-    this.router.navigateByUrl('login');
+    this.loggedIn.next(false)
+    this.router.navigate(['/login']);
   }
+
+
 
   updateUser(id: number, user: User){
     return this.webReqService.put(`user/${id}/edit`, user);
@@ -60,12 +72,5 @@ getAccessToken(): string {
   removeSession(){
     localStorage.removeItem('_id');
     localStorage.removeItem('x-access-token');
-  }
-
-  setLoggleShowHeader(value :boolean){
-    this.isLogged = value
-  }
-  getCheck(): boolean{
-    return this.isLogged
   }
 }

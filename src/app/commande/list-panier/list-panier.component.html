@@ -1,1 +1,80 @@
-<p>list-panier works!</p>
+<div class="container bg-light " style="margin-top: 50px;">
+    <table class="table table-hover table-sm">
+        <thead class="text-center text-uppercase">
+            <th>id</th>
+            <th>Designation</th>
+            <th>quantite</th>
+            <th>Prix Unitaire</th>
+            <th>Total</th>
+            <th colspan="2">Action</th>
+        </thead>
+        <tbody class="text-center">
+            <tr *ngFor="let panier of paniers">
+                <td>{{ panier.id }}</td>
+                <td>{{ panier.design }}</td>
+                <td>{{ panier.quantite }}</td>
+                <td>{{ panier.pu }} Ar</td>
+                <td>{{ panier.pu * panier.quantite }} Ar</td>
+                <td>{{ panier.pu * panier.quantite }} Ar</td>
+                <td>{{ panier.pu * panier.quantite }} Ar</td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" name="" id="" class="btn btn-primary btn-lg btn-block" (click)="validate()">Soumettre</button>
+</div>
+
+
+<!--  facture start content -->
+<div id="contentPDF" style="background-color: #fff;height: 800px;">
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="contentPDF"  style="margin: 0 auto;width: 90%;color: #000;">
+    <h1 style="font-size: 30px;" class="text-uppercase text-center mt-3 mb-5">Facture</h1>
+    <br>
+    <br>
+    <br>
+    <h1>N° CLIENT: 000001</h1>
+    <h1>NOM :RAFANOMEZANTSOA NATENAINA Alfinace</h1>
+    <table class="table table-bordered">
+        <thead class="text-center text-uppercase" style="font-size: 20px;">
+            <th>Designation</th>
+            <th>Prix Unitaire</th>
+            <th>quantite</th>
+            <th>montant</th>
+        </thead>
+        <tbody class="text-center" style="color: #000; font-size: 20px;">
+            <tr>
+                <td>Vary</td>
+                <td>5000</td>
+                <td>40</td>
+                <td>200000</td>
+            </tr>
+            <tr>
+                <td>Vary</td>
+                <td>5000</td>
+                <td>40</td>
+                <td>200000</td>
+            </tr>
+            <tr>
+                <td>Vary</td>
+                <td>5000</td>
+                <td>40</td>
+                <td>200000</td>
+            </tr>
+            <tr>
+                <td>Vary</td>
+                <td>5000</td>
+                <td>40</td>
+                <td>200000</td>
+            </tr>
+            <tr style="font-weight: bolder;">
+                <td colspan="2" style="border-bottom: none;border-left: none; "></td>
+                <td>TOTAL</td>
+                <td>500000</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>

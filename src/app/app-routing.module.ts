@@ -8,6 +8,7 @@ import { ListProduitComponent } from './produit/list-produit/list-produit.compon
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ListClientComponent } from './client/list-client/list-client.component';
 import { CommandeComponent } from './commande/commande/commande.component';
+import { ListPanierComponent } from './commande/list-panier/list-panier.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'produit/list', component: ListProduitComponent, canActivate: [AuthGuard]},
   {path: 'client/list', component: ListClientComponent, canActivate: [AuthGuard]},
   {path: 'commande', component: CommandeComponent, canActivate: [AuthGuard]},
+  {path: 'commande/list', component: ListPanierComponent, canActivate: [AuthGuard]},
   {path: 'login', component: SignInComponent},
   {path: 'register', component: SignUpComponent}
 ];

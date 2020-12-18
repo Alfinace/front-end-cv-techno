@@ -8,14 +8,10 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent implements OnInit {
   title = 'front-end';
-  isLogged = false;
-  eventIsLogged = new EventEmitter<boolean>()
   constructor(
     private userService: UserService) {}
   ngOnInit(): void {
-    if (localStorage.getItem('x-access-token')) {
-      this.isLogged = true
-    }
+    alert("rrrrr")
   }
 
 logout() {

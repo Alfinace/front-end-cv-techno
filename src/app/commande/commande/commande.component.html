@@ -1,5 +1,5 @@
 
-<div *ngIf="step === 0" style="display: grid;grid-template-columns:auto auto;justify-content: center;">
+<div *ngIf="step === 0" class="content">
     <app-choix-client  (eventNextStep)="nextStep($event)"></app-choix-client>
 </div>
 <div *ngIf="step === 1" class="container">
