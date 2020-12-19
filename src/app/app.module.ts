@@ -18,7 +18,6 @@ import { AuthGuard } from './_helpers/auth.guard';
 import { ListProduitComponent } from './produit/list-produit/list-produit.component';
 import { AddProduitComponent } from './produit/add-produit/add-produit.component';
 import { UpdateProduitComponent } from './produit/update-produit/update-produit.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProduitService } from './services/produit.service';
 import { ListClientComponent } from './client/list-client/list-client.component';
 import { AddClientComponent } from './client/add-client/add-client.component';
@@ -29,6 +28,18 @@ import { ListPanierComponent } from './commande/list-panier/list-panier.componen
 import { CommandeComponent } from './commande/commande/commande.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommandeService } from './services/commande.service';
+import { NavComponent } from './nav/nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { LayoutHomeComponent } from './layouts/layout-home/layout-home.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +50,6 @@ import { CommandeService } from './services/commande.service';
     ListProduitComponent,
     AddProduitComponent,
     UpdateProduitComponent,
-    DashboardComponent,
     ListClientComponent,
     AddClientComponent,
     UpdateClientComponent,
@@ -47,6 +57,9 @@ import { CommandeService } from './services/commande.service';
     AddCommandeComponent,
     ListPanierComponent,
     CommandeComponent,
+    NavComponent,
+    DashboardComponent,
+    LayoutHomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +68,15 @@ import { CommandeService } from './services/commande.service';
     FormsModule,
     HttpClientModule,
     NgbModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
   ],
   providers: [
     WebRequestService,

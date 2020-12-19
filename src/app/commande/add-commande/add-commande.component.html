@@ -1,5 +1,6 @@
 <div class="tableau bg-light " [ngStyle]="{ height: '100%'}">
     <hr />
+    <h1>LIST DE PRODUIT PEUT COMMANDE</h1>
     <table class="table table-hover table-sm">
         <thead class="text-center text-uppercase">
             <th>Numero</th>
@@ -9,7 +10,7 @@
             <th colspan="3">Actions</th>
         </thead>
         <tbody class="text-center">
-            <tr *ngFor="let produit of produits">
+            <tr *ngFor="let produit of produits | async ">
                 <td>{{ produit.id }}</td>
                 <td>{{ produit.design }}</td>
                 <td>{{ produit.stock }}</td>
@@ -25,7 +26,6 @@
             </tr>
         </tbody>
     </table>
-    <a  [routerLink]="['/commande/list']" routerLinkActive="router-link-active" >Voir panier</a>
     <ul class="pagination justify-content-center">
         <li class="page-item">
             <a class="page-link" (click)="getPrevListProduit()">Previous</a>
@@ -39,4 +39,12 @@
             <a class="page-link" *ngIf="btnNext" (click)="getNextListProduit()">Next</a>
         </li>
     </ul>
+
+    <br>
+    <br>
+    <div style="text-align: center;">
+    <button mat-button mat-raised-button  [routerLink]="['/commande/list']" routerLinkActive="router-link-active" >Voir panier</button>
+</div>
+    <br>
+    <br>
 </div>

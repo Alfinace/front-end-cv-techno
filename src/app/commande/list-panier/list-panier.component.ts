@@ -14,6 +14,7 @@ import html2canvas from 'html2canvas';
 })
 export class ListPanierComponent implements OnInit {
   paniers= [];
+  facture = [];
 
   constructor(private produitService: ProduitService,
     private commandeService: CommandeService) { }
@@ -34,10 +35,13 @@ export class ListPanierComponent implements OnInit {
     let data = JSON.parse(sessionStorage.getItem('panier'));
 
     this.commandeService.addCommande({id:clientID,commands:data}).subscribe((result: HttpResponse<any>)=>{
-      sessionStorage.removeItem('panier')
-      sessionStorage.removeItem('client_id')
-
-      this.generatePDF()
+      // sessionStorage.removeItem('panier')
+      // sessionStorage.removeItem('client_id')
+      console.log(result.facture);
+      if(result.status === 200){
+        // this.facture = result.
+      }
+      // this.generatePDF()
     },
     (error: HttpErrorResponse)=>{
       console.log(error);

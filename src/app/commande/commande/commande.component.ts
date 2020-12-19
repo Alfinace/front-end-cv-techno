@@ -7,7 +7,7 @@ import { Client } from 'src/app/models/client';
   styleUrls: ['./commande.component.css']
 })
 export class CommandeComponent implements OnInit {
-  taille=80;
+  taille=20;
   step: number;
   clientId: number;
   constructor() { }

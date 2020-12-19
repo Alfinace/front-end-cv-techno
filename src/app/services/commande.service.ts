@@ -11,5 +11,8 @@ export class CommandeService {
   addCommande(command: any) {
     return this.webReqService.post(`command`,command);
   }
+  listForCommand(page?: number, limit?: number){
+    return this.webReqService.get(`command/add?page=${page}&limit=${limit}`);
+  }
 
 }

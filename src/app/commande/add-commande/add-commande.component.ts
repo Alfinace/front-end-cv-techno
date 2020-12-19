@@ -6,6 +6,7 @@ import { ProduitService } from 'src/app/services/produit.service';
 import { UserService } from 'src/app/services/user.service';
 import { NgForm } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { CommandeService } from '../../services/commande.service';
 
 @Component({
     selector: 'app-add-commande',
@@ -25,14 +26,14 @@ export class AddCommandeComponent implements OnInit {
     // for display when we want to edit one Item
     makeEdit = false;
     constructor(
-        private produitService: ProduitService,
+        private commandeService: CommandeService,
         private userService: UserService,
         private activedRoute: ActivatedRoute,
         private router: Router
     ) {}
 
     ngOnInit(): void {
-        this.limit = 20;
+        this.limit = 10;
         this.activedRoute.queryParams.subscribe(
             (params) => {
                 // tslint:disable-next-line: radix
@@ -64,7 +65,9 @@ export class AddCommandeComponent implements OnInit {
     }
 
     getList(page?: number): void {
-        this.produitService.getAllProduit(page, this.limit).subscribe(
+        console.log(page);
+        
+        this.commandeService.listForCommand(page, this.limit).subscribe(
             (observe: any) => {
                 const data = observe.data.rows;
                 this.produits = data;
