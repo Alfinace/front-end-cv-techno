@@ -76,7 +76,7 @@ import { LayoutHomeComponent } from './layouts/layout-home/layout-home.component
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatMenuModule,
+    MatMenuModule
   ],
   providers: [
     WebRequestService,

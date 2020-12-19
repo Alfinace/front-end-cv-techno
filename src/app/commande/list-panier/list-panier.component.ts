@@ -34,11 +34,13 @@ export class ListPanierComponent implements OnInit {
     let clientID = JSON.parse(sessionStorage.getItem('client_id'));
     let data = JSON.parse(sessionStorage.getItem('panier'));
 
-    this.commandeService.addCommande({id:clientID,commands:data}).subscribe((result: HttpResponse<any>)=>{
+    this.commandeService.addCommande({id:clientID,commands:data}).subscribe((result: any)=>{
       // sessionStorage.removeItem('panier')
       // sessionStorage.removeItem('client_id')
       console.log(result.facture);
       if(result.status === 200){
+        console.log(result);
+        
         // this.facture = result.
       }
       // this.generatePDF()
@@ -49,7 +51,7 @@ export class ListPanierComponent implements OnInit {
     })
   }
 
-  generatePDF() {
+  generatePDF(num_client) {
     var data = document.getElementById('contentPDF');
     html2canvas(data).then(canvas => {
       var imgWidth = 208;

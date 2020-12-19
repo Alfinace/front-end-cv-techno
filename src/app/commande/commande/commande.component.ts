@@ -14,10 +14,8 @@ export class CommandeComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(JSON.parse(sessionStorage.getItem('client_id')));
-    
-    
    if (!JSON.parse(sessionStorage.getItem('client_id'))) {
-     this.step=0
+     this.step = 0
    }else{
      this.step = 1;
    }

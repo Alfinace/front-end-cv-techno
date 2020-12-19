@@ -5,7 +5,7 @@ import { Produit } from 'src/app/models/produit';
 import { ProduitService } from 'src/app/services/produit.service';
 import { UserService } from 'src/app/services/user.service';
 import { NgForm } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CommandeService } from '../../services/commande.service';
 
 @Component({
@@ -14,17 +14,12 @@ import { CommandeService } from '../../services/commande.service';
     styleUrls: ['./add-commande.component.css'],
 })
 export class AddCommandeComponent implements OnInit {
-    produits: Produit[];
-    produit: any;
-    limit: number;
-    pages: number[];
-    currentPage: number;
-    btnPrev: boolean;
-    btnNext = true;
-
-    private command = new BehaviorSubject([]);
-    // for display when we want to edit one Item
-    makeEdit = false;
+    produits = [];
+    size = 10;
+    maxPage:number;
+    numberPage :number;
+    startIndex: number;
+    endIndex: number;
     constructor(
         private commandeService: CommandeService,
         private userService: UserService,
@@ -33,64 +28,48 @@ export class AddCommandeComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.limit = 10;
-        this.activedRoute.queryParams.subscribe(
-            (params) => {
-                // tslint:disable-next-line: radix
-                // tslint:disable-next-line: use-isnan
-                // tslint:disable-next-line: radix
-                this.currentPage = 1;
-            },
-            // tslint:disable-next-line: no-shadowed-variable
-            (error) => console.log(error)
-        );
-        this.getList(this.currentPage);
+        this.getList();
+        this.startIndex = 0;
+        this.endIndex = this.size;
+        this.numberPage = 1
+    
     }
 
-    getNextListProduit() {
-        const page = this.currentPage + 1;
-        if (page <= this.pages.length) {
-            this.getList(page);
-        }
+    navigate(num_page: number){
+        this.getList();
+        this.numberPage = num_page;
+        this.endIndex =  this.size *num_page
+        this.startIndex = this.endIndex - this.size
     }
-    getPrevListProduit() {
-        this.getList(this.currentPage - 1);
+
+    nextPage(){
+        this.getList();
+        this.numberPage = this.numberPage + 1;
+        this.startIndex = this.endIndex
+        this.endIndex= this.startIndex + this.size
     }
-    getListProduit(page: number) {
-        this.getList(page);
+
+    prevPage(){
+        this.getList();
+        this.numberPage = this.numberPage - 1;
+        this.endIndex = this.startIndex
+        this.startIndex= this.endIndex - this.size
     }
-    getLastList(value: Produit) {
-        console.log(value);
-        this.getList(this.pages.length);
+
+    getArrayFromNumber(len:number){
+        let l = parseInt(((len/10)+ 0.5).toFixed(0))
+        this.maxPage = l;
+        return new Array(l);
     }
 
     getList(page?: number): void {
-        console.log(page);
-        
-        this.commandeService.listForCommand(page, this.limit).subscribe(
+        this.commandeService.listForCommand().subscribe(
             (observe: any) => {
-                const data = observe.data.rows;
-                this.produits = data;
-                // tslint:disable-next-line: radix
-                let pages = parseInt(observe.data.count) / this.limit;
-                // tslint:disable-next-line: radix
-                const remain = parseInt(observe.data.count) % this.limit;
-                if (remain !== 0) {
-                    pages = pages + 1;
-                }
-                const element = [];
-                for (let index = 1; index <= pages; index++) {
-                    element.push(index);
-                }
-                this.pages = element;
-                this.currentPage = page;
-                console.log(page < this.pages.length);
-
-                if (page < this.pages.length) {
-                    this.btnNext = true;
-                } else {
-                    this.btnNext = false;
-                }
+               let currentData = JSON.parse(sessionStorage.getItem('panier'));
+               console.log(currentData);
+               
+                const data = observe.data;
+                this.produits = data.rows;
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 401) {
