@@ -40,6 +40,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { LayoutHomeComponent } from './layouts/layout-home/layout-home.component';
+import { NumberToLetterService } from './services/numberToLetter.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,6 +85,7 @@ import { LayoutHomeComponent } from './layouts/layout-home/layout-home.component
     UserService,
     ProduitService,
     CommandeService,
+    NumberToLetterService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,

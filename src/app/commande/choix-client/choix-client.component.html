@@ -1,10 +1,14 @@
-<div style="margin-top: 200px;">
-<div class="form-group" style="width: 200px;">
-    <label for=""></label>
-    <select class="custom-select" name="" id="" [(ngModel)]='clientID'>
-      <option selected>Select one</option>
-      <option *ngFor="let client of clients" value="{{client.id}}">{{ client.name }}</option>
-    </select>
-  </div>
+<div style="margin-top: 100px; height: 500px;">
+
+    <h1 style="padding-left: 20px; font-size: 25px" class="font-weight-lighter mb-5"> Veuillez selection le client
+        concerné s'it vous plait, Merci :)</h1>
+
+    <div class="form-group" >
+        <label for=""></label>
+        <select class="custom-select" name="" id="" [(ngModel)]='clientID'>
+            <option selected></option>
+            <option *ngFor="let client of clients" value="{{client.id}}">{{ client.name }}</option>
+        </select>
+    </div>
+    <a class="btn btn-primary btn-sm btn-block mt-5" (click)="next()" role="button">Continuer</a>
 </div>
-<a class="btn btn-primary btn-sm btn-block mt-5" (click)="next()" role="button">Continuer</a>
