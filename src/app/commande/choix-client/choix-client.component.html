@@ -2,13 +2,13 @@
 
     <h1 style="padding-left: 20px; font-size: 25px" class="font-weight-lighter mb-5"> Veuillez selection le client
         concerné s'it vous plait, Merci :)</h1>
-
-    <div class="form-group" >
-        <label for=""></label>
-        <select class="custom-select" name="" id="" [(ngModel)]='clientID'>
-            <option selected></option>
-            <option *ngFor="let client of clients" value="{{client.id}}">{{ client.name }}</option>
-        </select>
-    </div>
-    <a class="btn btn-primary btn-sm btn-block mt-5" (click)="next()" role="button">Continuer</a>
+    <div style="width:200px;margin:0 auto">
+        <div class="form-group" >
+            <label for=""></label>
+            <select class="form-control form-control-sm" name="" id="" [(ngModel)]='clientID'>
+                <option *ngFor="let client of clients" value="{{client.id}}">{{ client.name }}</option>
+            </select>
+        </div>
+    <a class="btn btn-primary btn-sm btn-block mt-3" *ngIf="clientID"  (click)="next()" role="button">Continuer</a>
+</div>
 </div>

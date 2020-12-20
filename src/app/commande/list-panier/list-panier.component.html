@@ -1,28 +1,35 @@
-<div class="container bg-light m-5">
-    <table class="table table-hover mt-5 table-sm table-bordered">
-        <thead class="text-center text-uppercase">
-            <th>id</th>
-            <th>Designation</th>
-            <th>quantite</th>
-            <th>Prix Unitaire</th>
-            <th>Montant</th>
-            <th colspan="2">Action</th>
-        </thead>
-        <tbody class="text-center">
-            <tr *ngFor="let panier of paniers">
-                <td>{{ panier.id }}</td>
-                <td>{{ panier.design }}</td>
-                <td>{{ panier.quantite }}</td>
-                <td>{{ panier.pu }} Ar</td>
-                <td>{{ panier.pu * panier.quantite }} Ar</td>
-                <td><button type="button" class="btn btn-outline-info btn-sm">
-                    Editer
-                </button></td>
-                <td><button type="button" class="btn btn-outline-danger btn-sm">
-                    Annuler
-                </button></td>
-            </tr>
-        </tbody>
-    </table>
-    <button type="button" name="" id="" class="btn btn-success " (click)="validate()">Soumettre le commande</button>
+
+<div class="card mt-5 mb-5" style="margin:0 auto; width:700px;height: auto;">
+    <div class="card-header bg-info text-center p-3">
+        <h4 class="mb-0 text-white"> Panier du commande </h4>
+        <span><i class="fas fa-cart-plus fa-2x fa-fw"></i></span>
+    </div>
+    <div class="card-body text-center">
+        <h1 class="mb-1">$350</h1>
+        <p>Per Month Plateform</p>
+    </div>
+    <div class="card-body border-top">
+        <table class="table table-hover mt-5 table-sm">
+            <thead class="text-center text-uppercase">
+                <th>id</th>
+                <th>Designation</th>
+                <th>quantite</th>
+                <th>P.u</th>
+                <th>Montant</th>
+                <th colspan="2">Action</th>
+            </thead>
+            <tbody class="text-center text-s">
+                <tr *ngFor="let panier of paniers; let i = index">
+                    <td>{{ panier.id }}</td>
+                    <td>{{ panier.design }}</td>
+                    <td>{{ panier.quantite }}</td>
+                    <td>{{ panier.pu }} Ar</td>
+                    <td>{{ panier.pu * panier.quantite }} Ar</td>
+                    <td><a><i class="fas fa-pencil-alt" aria-hidden="true"></i></a></td>
+                    <td><a (click)="deleteItem(i)"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+        <a (click)="validate()" class="btn btn-secondary btn-block btn-lg">Get Started</a>
+    </div>
 </div>

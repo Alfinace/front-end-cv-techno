@@ -17,7 +17,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./list-panier.component.css'],
 })
 export class ListPanierComponent implements OnInit {
-  paniers = [];
+  paniers = <any>[];
   facture = <any>[];
   currentClient: Client;
   price_total = 0;
@@ -32,8 +32,14 @@ export class ListPanierComponent implements OnInit {
   ngOnInit(): void {
     var data = <any>[];
     data = JSON.parse(sessionStorage.getItem('panier'));
-    data.forEach((panier) => {
-      this.produitService
+   this.fetchData(data)
+  }
+  fetchData(data: any): void {
+    var data_temp = <any>[];
+    // data.forEach((panier) => {
+      for (let i = 0; i < data.length; i++) {
+        const panier = data[i];
+        this.produitService
         .getOneProduit(panier.produitId)
         .subscribe((produit: any) => {
           let data_tmp = {
@@ -42,15 +48,27 @@ export class ListPanierComponent implements OnInit {
             pu: produit.data.pu,
             quantite: panier.qte,
           };
-          this.paniers.push(data_tmp);
-        });
+          data_temp.push(data_tmp);
+        // });
     });
+      }
+     
+    this.paniers = data_temp;
+  }
+  deleteItem(index: number){
+    let paniers= <any>[];
+    console.log(index);
+    paniers = JSON.parse(sessionStorage.getItem('panier'));
+    paniers.splice(index,1);
+    sessionStorage.setItem('panier', JSON.stringify(paniers));
+    this.paniers = [];
+    this.fetchData(paniers);
+
   }
 
   validate() {
     let clientID = JSON.parse(sessionStorage.getItem('client_id'));
     let data = JSON.parse(sessionStorage.getItem('panier'));
-
     this.commandeService
       .addCommande({ id: clientID, commands: data })
       .subscribe(

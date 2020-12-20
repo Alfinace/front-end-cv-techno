@@ -1,33 +1,40 @@
 
-<div class="theme">
- <h1>gestion de commande</h1>
-</div>
-<div *ngIf="message !== null" class="fixed-top">
-  <div class="message-error text-center">
-    {{ message }}
-  </div>
-</div>
+
 <div class="content container">
-  <div class="container-login  ">
-    <form #formulaire = "ngForm" (ngSubmit)="onSubmit(formulaire)">
-      <h1 class="title text-primary text-uppercase mb-5 text-center">Authentification</h1>
-      <div class="form-group">
-        <input type="email" name="_email" ngModel required  id="email" placeholder="Email" value="{{ defaultValueEmail}}">
-      </div>
-  
-      <div class="form-group">
-        <input type="password" name="_password" ngModel required  id="password" placeholder="Mot de passe" value="{{ defaultValuePassword}}">
-      </div>
-    <div class="content-action">
-      <div>
-        <button type="submit" [disabled]="!formulaire.valid"    class="btn">connexion</button>
-      </div>
-      <div>
-        <a href="http://">Mot de passe oublié?</a>
-      </div>
+  <div class="card ">
+    <div class="card-header text-center">
+      <h2 class="card-title text-uppercase text-primary m-3">Authentication</h2>
+      <span class="splash-description">Please enter your user information.</span>
     </div>
-    </form>
-  </div>
+    <div class="card-body">
+      <div *ngIf="message !== null" class="mb-3">
+        <div class="message-error text-center">
+          {{ message }}
+        </div>
+      </div>
+        <form #formulaire = "ngForm" (ngSubmit)="onSubmit(formulaire)">
+            <div class="form-group">
+                <input class="form-control form-control-lg" name="_email" value="{{ defaultValueEmail}}" ngModel required  id="email" type="text" placeholder="Email" autocomplete="">
+            </div>
+            <div class="form-group">
+                <input class="form-control form-control-lg" name="_password" value="{{ defaultValuePassword}}" ngModel required  id="password" type="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox"><span class="custom-control-label">Remember Me</span>
+                </label>
+            </div>
+            <button type="submit" [disabled]="!formulaire.valid"  class="btn btn-primary btn-lg btn-block">Sign in</button>
+        </form>
+    </div>
+    <div class="card-footer bg-white p-0  ">
+        <div class="card-footer-item card-footer-item-bordered">
+            <a href="#" class="footer-link">Create An Account</a></div>
+        <div class="card-footer-item card-footer-item-bordered">
+            <a href="#" class="footer-link">Forgot Password</a>
+        </div>
+    </div>
+</div>
   <div class="container-image">
     <img src="../../../assets/images/bannerthumb.png"  alt="inmage illistator bannerthumb" srcset="">
   </div>
