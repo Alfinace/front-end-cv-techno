@@ -1,15 +1,17 @@
-<div class=" bg-light ">
-    <hr />
-    <h1 class="text-center text-success">LIST DE PRODUIT PEUT COMMANDE</h1>
+<div class=" card bg-light mt-5" style="margin:0 auto; width:1000px;height: auto;">
+     <div class="card-header bg-info text-center p-3">
+        <h4 class="mb-0 text-white"> Faite vous le commande  </h4>
+        <span><i class="fas fa-cart-plus fa-2x fa-fw"></i></span>
+    </div>
     <table class="table table-hover table-sm">
-        <thead class="text-center text-uppercase">
+        <thead class="text-center text-uppercase" style="font-size: 15px">
             <th>Numero</th>
             <th>Designation</th>
             <th>Stock</th>
             <th>Prix Unitaire</th>
             <th colspan="3">Actions</th>
         </thead>
-        <tbody class="text-left">
+        <tbody class="text-center" style="font-size: 12px">
             <tr *ngFor="let produit of produits | slice:startIndex:endIndex">
                 <td>{{ produit.id }}</td>
                 <td>{{ produit.design }}</td>
@@ -17,10 +19,11 @@
                 <td>{{ produit.pu }}</td>
                 <td style="display: grid;grid-template-columns: auto auto auto;justify-content: center;">
                     <form #form="ngForm" (ngSubmit)="addPanier(form,produit.id)" style="display: flex;flex-direction: row;">
-                      <input type="number"
-                        class="form-control form-control-sm" min="0" max="{{produit.stock}}" name="quantite" id="" value="0" ngModel required style="width: 70px;" placeholder="">
+                      <!-- <input type="number"
+                        class="form-control form-control-sm" min="0" max="{{produit.stock}}" name="quantite" id="" value="0" ngModel required style="width: 70px;" placeholder=""> -->
 
-                    <button class="btn btn-sm btn-primary  " type="submit">Ajouter </button>
+                    <a (click)="addPanier(form,produit.id)" *ngIf="!produit.check"><i class=" fas fa-plus-circle fa-2x text-primary"></i></a>
+                    <a  *ngIf="produit.check"><i class=" fas fa-check-circle text-success fa-2x"></i></a>
                     </form>
                 </td>
             </tr>

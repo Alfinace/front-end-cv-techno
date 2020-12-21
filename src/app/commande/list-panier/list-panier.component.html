@@ -1,5 +1,8 @@
 
-<div class="card mt-5 mb-5" style="margin:0 auto; width:700px;height: auto;">
+<div class="card mt-5 mb-5" style="position: relative;margin:0 auto; width:700px;height: auto;">
+    <div *ngIf="isWait" style="position: absolute;width: 100%;height: 100%;background:rgb(0 0 0 / 71%);">
+        <div style="margin-top:200px;font-size: 20px;text-align: center; color: white">En attente reponse au serveur ...</div>
+    </div>
     <div class="card-header bg-info text-center p-3">
         <h4 class="mb-0 text-white"> Panier du commande </h4>
         <span><i class="fas fa-cart-plus fa-2x fa-fw"></i></span>
@@ -8,8 +11,8 @@
         <h1 class="mb-1">$350</h1>
         <p>Per Month Plateform</p>
     </div>
-    <div class="card-body border-top">
-        <table class="table table-hover mt-5 table-sm">
+    <div class="card-body border-top" >
+        <table class="table table-hover  table-sm">
             <thead class="text-center text-uppercase">
                 <th>id</th>
                 <th>Designation</th>
@@ -26,10 +29,43 @@
                     <td>{{ panier.pu }} Ar</td>
                     <td>{{ panier.pu * panier.quantite }} Ar</td>
                     <td><a><i class="fas fa-pencil-alt" aria-hidden="true"></i></a></td>
-                    <td><a (click)="deleteItem(i)"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    <td><a (click)="open(mymodal,i)"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+                <tr class="text-center" *ngIf="paniers.length === 0" style="height: 50px">
+                    <td colspan="7">Aucun panier</td>
                 </tr>
             </tbody>
         </table>
-        <a (click)="validate()" class="btn btn-secondary btn-block btn-lg">Get Started</a>
+        <a (click)="validate()" *ngIf="!isBtnWait && paniers.length !== 0"  class="btn btn-secondary mt-5 mb-5 btn-block btn-lg">Valider &  Generate pdf</a>
+
+        <a *ngIf="isBtnWait" class="btn btn-secondary mt-5 mb-5 btn-block btn-lg">
+            <span class="spinner-grow spinner-grow-sm"></span>
+            Traitement en cours...
+        </a>
     </div>
 </div>
+<ng-template #mymodal let-modal>
+
+  <div class="modal-header">
+
+    <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+      <span aria-hidden="true">×</span>
+
+    </button>
+
+  </div>
+
+  <div class="modal-body">
+
+    Avez-vous sûre de supprimer cet element dans le panier ?
+
+  </div>
+  <div class="btn-group btn-block">
+      <button class=" btn btn-danger btn-sm" (click)="deleteItem(indexElementDelete);modal.close('Save click')">Oui</button>
+      <button class=" btn btn-primary btn-sm" (click)="modal.close('Save click')" >Non</button>
+  </div>
+
+</ng-template>

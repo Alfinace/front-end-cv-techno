@@ -66,10 +66,9 @@ export class AddCommandeComponent implements OnInit {
         this.commandeService.listForCommand().subscribe(
             (observe: any) => {
                let currentData = JSON.parse(sessionStorage.getItem('panier'));
-               console.log(currentData);
-               
                 const data = observe.data;
-                this.produits = data.rows;
+                // check if produit is already token
+                this.produits = data.rows.map(this.checkItemAlreadySelect)
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 401) {
@@ -79,11 +78,25 @@ export class AddCommandeComponent implements OnInit {
         );
     }
 
+    checkItemAlreadySelect(item){   
+        item.check = false;
+        let currentData = JSON.parse(sessionStorage.getItem('panier'));
+        if (currentData) { 
+            for (var i = 0; i < currentData.length; i++) {
+              let data =currentData[i];
+              if(item.id === data.produitId){
+                  item.check = true;
+                  break
+              }
+          }
+        } 
+         return item
+    }
     addPanier(form: NgForm, id: number): void {
         let { quantite } = form.value;
         var obj = new Array();
         var currentData = new Array();
-        var newData = [{ produitId: id, qte:quantite }];
+        var newData = [{ produitId: id, qte:1 }];
 
         currentData = JSON.parse(sessionStorage.getItem('panier'));
         if (!currentData) {
@@ -95,5 +108,6 @@ export class AddCommandeComponent implements OnInit {
             currentData = currentData.concat(newData);
             sessionStorage.setItem('panier', JSON.stringify(currentData));
         }
+        this.getList()
     }
 }

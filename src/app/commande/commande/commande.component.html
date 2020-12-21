@@ -2,6 +2,6 @@
 <div *ngIf="step === 0" class="content">
     <app-choix-client  (eventNextStep)="nextStep($event)"></app-choix-client>
 </div>
-<div *ngIf="step === 1" class="container">
+<div *ngIf="step === 1" class="container" >
   <app-add-commande ></app-add-commande>
 </div>

@@ -8,8 +8,9 @@ body {
     font-family: Roboto, "Ubuntu", sans-serif;
 }
 
-
-
+a{
+    cursor: pointer;
+}
 
 
 

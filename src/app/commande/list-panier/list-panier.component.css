@@ -1,0 +1,7 @@
+.fa-trash{
+
+	transition: color 0.5s ease
+}
+.fa-trash:hover{
+	color: red;
+}
