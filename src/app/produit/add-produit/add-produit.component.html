@@ -1,22 +1,18 @@
 <div>
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-      <h4 class=" text-uppercase text-center font-weight-bold	">Chargement du produit</h4>
       <hr>
         <div class="form-group">
-          <label for="">Designation</label>
           <input type="text"
-            class="form-control form-control-sm" name="design" ngModel required  aria-describedby="helpId" placeholder="">
+            class="form-control form-control-lg" name="design" ngModel required  aria-describedby="helpId" placeholder="Designation">
         </div>
         <div class="form-group">
-            <label for="">Stock</label>
             <input type="number"
-              class="form-control form-control-sm" name="stock" ngModel required id="" aria-describedby="helpId" placeholder="">
+              class="form-control form-control-lg" name="stock" ngModel required id="" aria-describedby="helpId" placeholder="Stock">
           </div>
           <div class="form-group">
-            <label for="">Prix Unitaire</label>
             <input type="number"
-              class="form-control form-control-sm" name="pu" id="" ngModel required aria-describedby="helpId" placeholder="">
+              class="form-control form-control-lg" name="pu" id="" ngModel required aria-describedby="helpId" placeholder="Prix Unitaire">
           </div>
-          <button type="submit"  class="btn btn-primary btn-block btn-sm">Ajouter</button>
+          <button type="submit"  class="btn btn-primary btn-block btn-lg">Ajouter</button>
     </form>
 </div>

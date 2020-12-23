@@ -1,10 +1,12 @@
 export class Client {
     id: number;
-    name: string;
+    firstName: string;
+    lastName: string;
     contact: string;
-    public constructor(id: number, name: string, contact: string){
+    public constructor(id: number, lastName: string, firstName: string, contact: string){
         this.id = id;
-        this.name = name;
+        this.lastName = lastName;
+        this.firstName = firstName;
         this.contact = contact;
     }
 }

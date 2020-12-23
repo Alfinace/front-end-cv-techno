@@ -10,6 +10,7 @@ import { ListClientComponent } from './client/list-client/list-client.component'
 import { CommandeComponent } from './commande/commande/commande.component';
 import { ListPanierComponent } from './commande/list-panier/list-panier.component';
 import { LayoutHomeComponent } from './layouts/layout-home/layout-home.component';
+import { CommandeListComponent } from './commande/commande-list/commande-list.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,8 @@ const routes: Routes = [
       {path: 'produit/list', component: ListProduitComponent, canActivate: [AuthGuard]},
       {path: 'client/list', component: ListClientComponent, canActivate: [AuthGuard]},
       {path: 'commande', component: CommandeComponent, canActivate: [AuthGuard]},
-      {path: 'commande/list', component: ListPanierComponent, canActivate: [AuthGuard]}
+      {path: 'commande/list', component: ListPanierComponent, canActivate: [AuthGuard]},
+      {path: 'commande/histo', component: CommandeListComponent, canActivate: [AuthGuard]}
     ]
   },
   {path: 'login', component: SignInComponent},

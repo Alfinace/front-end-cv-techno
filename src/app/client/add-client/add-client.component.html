@@ -1,19 +1,18 @@
 <div>
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-      <h4 class=" text-uppercase text-center font-weight-bold	">Ajout du nouveau client</h4>
       <hr>
         <div class="form-group">
           <input type="text"
-            class="form-control form-control-sm" name="lastName" ngModel required  aria-describedby="helpId" placeholder="Nom">
+            class="form-control form-control-lg" name="lastName" ngModel required  aria-describedby="helpId" placeholder="Nom">
         </div>
         <div class="form-group">
             <input type="text"
-              class="form-control form-control-sm" name="firstName" ngModel required  aria-describedby="helpId" placeholder="Prénom">
+              class="form-control form-control-lg" name="firstName" ngModel required  aria-describedby="helpId" placeholder="Prénom">
           </div>
         <div class="form-group">
             <input type="number"
-              class="form-control form-control-sm" name="contact" ngModel required id="" aria-describedby="helpId" placeholder="Numéro téléphonique">
+              class="form-control form-control-lg" name="contact" ngModel required id="" aria-describedby="helpId" placeholder="Numéro téléphonique">
           </div>
-          <button type="submit"  class="btn btn-primary btn-block btn-sm">Ajouter</button>
+          <button type="submit"  class="btn btn-primary btn-block btn-lg">Ajouter</button>
     </form>
 </div>

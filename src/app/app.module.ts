@@ -41,6 +41,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { LayoutHomeComponent } from './layouts/layout-home/layout-home.component';
 import { NumberToLetterService } from './services/numberToLetter.service';
+import { CommandeListComponent } from './commande/commande-list/commande-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +62,7 @@ import { NumberToLetterService } from './services/numberToLetter.service';
     NavComponent,
     DashboardComponent,
     LayoutHomeComponent,
+    CommandeListComponent,
   ],
   imports: [
     BrowserModule,

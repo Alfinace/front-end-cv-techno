@@ -26,10 +26,6 @@
         <h4 class="mb-0 text-white">Panier du commande</h4>
         <span><i class="fas fa-cart-plus fa-2x fa-fw"></i></span>
     </div>
-    <div class="card-body text-center">
-        <h1 class="mb-1">$350</h1>
-        <p>Per Month Plateform</p>
-    </div>
     <div class="card-body border-top">
         <table class="table table-hover table-sm">
             <thead class="text-center text-uppercase">
@@ -38,22 +34,22 @@
                 <th>quantite</th>
                 <th>P.u</th>
                 <th>Montant</th>
-                <th colspan="2">Action</th>
+                <th colspan="2" *ngIf="!isBtnWait">Action</th>
             </thead>
             <tbody class="text-center text-s">
-                <tr *ngFor="let panier of paniers; let i = index">
+                <tr *ngFor="let panier of paniers; let i = index;">
                     <td>{{ panier.id }}</td>
                     <td>{{ panier.design }}</td>
                     <td>{{ panier.quantite }}</td>
                     <td>{{ panier.pu }} Ar</td>
                     <td>{{ panier.pu * panier.quantite }} Ar</td>
-                    <td>
-                        <a
+                    <td *ngIf="!isBtnWait">
+                        <a (click)="edit_panier(editContentPanier, i,panier.id,panier.design,panier.quantite,panier.pu)"
                             ><i class="fas fa-pencil-alt" aria-hidden="true"></i
                         ></a>
                     </td>
                     <td>
-                        <a (click)="open(mymodal, i)"
+                        <a *ngIf="!isBtnWait" (click)="open(confirm, i)"
                             ><i class="fa fa-trash" aria-hidden="true"></i
                         ></a>
                     </td>
@@ -67,6 +63,10 @@
                 </tr>
             </tbody>
         </table>
+        <hr>
+        <div class="card-body text-right">
+            <h4 class="mb-1">TOTAL : {{ priceTotal }}<sub>Ar</sub></h4>
+        </div>
         <a
             (click)="validate()"
             *ngIf="!isBtnWait && paniers.length !== 0"
@@ -82,7 +82,49 @@
         </a>
     </div>
 </div>
-<ng-template #mymodal let-modal>
+<ng-template #editContentPanier let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Editer un commande </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-2 text-uppercase" *ngIf="(onePanierEditable.stock - onePanierEditable.qte) > 0 ">
+            Stockage disponible : <span class=" text-success">{{ onePanierEditable.stock - onePanierEditable.qte}}</span>
+        </div>
+        <div class="m-2 text-danger text-uppercase" *ngIf="(onePanierEditable.stock - onePanierEditable.qte) <= 0 ">
+            Stockage n'est pas suffisant pour la quantité choisie
+        </div>
+        <div class="d-flex justify-content-between text-uppercase text-dark font-weight-bolder  mb-3">
+            <div class="p-2 ">Produit</div>
+            <div class="p-2 ">Quantite</div>
+            <div class="p-2 ">P.U</div>
+            <div class="p-2 ">Montant</div>
+          </div>
+          <hr>
+        <div class="d-flex text-center justify-content-between  mb-3">
+            <div class="p-2 ">{{ onePanierEditable.design }}</div>
+            <div class="p-2 ">{{ onePanierEditable.qte }}</div>
+            <div class="p-2 ">{{ onePanierEditable.pu }}</div>
+            <div class="p-2 ">{{ onePanierEditable.pu * onePanierEditable.qte }}</div>
+          </div>
+          
+          <div class="d-flex justify-content-between text-uppercase text-dark font-weight-bolder  mb-3">
+            <div class="p-2 "><input class="form-control" [(ngModel)]="onePanierEditable.qte"  style="width: 100px;" type="number" name="qte" id=""></div>
+            <div *ngIf="(onePanierEditable.stock - onePanierEditable.qte) > 0 " class="p-2 ">
+                <button type="button" (click)="update_panier();c('Close click')" class="btn btn-primary">
+                    Mettre à jour
+                </button>
+        </div>
+          </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #confirm  let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
         <button

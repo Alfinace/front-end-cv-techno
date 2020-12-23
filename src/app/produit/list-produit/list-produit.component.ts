@@ -4,6 +4,7 @@ import { Produit } from '../../models/produit';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-list-produit',
@@ -12,8 +13,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ListProduitComponent implements OnInit {
     produits: Produit[];
+    produitId: any;
     produit: any;
-    limit: number;
+    limit = 20;
     pages: number[];
     currentPage: number;
     btnPrev: boolean;
@@ -24,11 +26,11 @@ export class ListProduitComponent implements OnInit {
         private produitService: ProduitService,
         private userService: UserService,
         private activedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private modalService: NgbModal
     ) {}
 
     ngOnInit(): void {
-        this.limit = 4;
         this.activedRoute.queryParams.subscribe(
             (params) => {
                 // tslint:disable-next-line: radix
@@ -93,12 +95,20 @@ export class ListProduitComponent implements OnInit {
         );
     }
 
-    viewItem(id: number): void {
-        alert(id);
+    openFormForUpdate(content){
+        this.modalService.open(content);
+    }
+    confirmModalDeleteItem(content, id){
+        this.produitId = id;
+        this.modalService.open(content);
+    }
+    openForm(content){
+        this.modalService.open(content);
     }
     editItem(id: number): void {
         this.makeEdit = true;
         this.produitService.getOneProduit(id).subscribe((result: any) => {
+            console.log(result);
             this.produit = result.data;
         });
     }
@@ -114,9 +124,9 @@ export class ListProduitComponent implements OnInit {
         );
     }
     disableEdit(value: Produit) {
+        this.modalService.dismissAll();
         // to refresh current page
         this.getList(this.currentPage);
         this.makeEdit = false;
-        console.log('ok lets eee');
     }
 }

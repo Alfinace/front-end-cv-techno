@@ -1,0 +1,135 @@
+<div class=" card bg-light mt-5" style="margin:0 auto; width:1000px;height: auto;">
+    <div class="card-header bg-info text-center p-2">
+       <h4 class="mb-0 text-white text-uppercase"> Liste du commande   </h4>
+   </div>
+   <table class="table table-hover table-sm">
+       <thead class="text-center text-uppercase" style="font-size: 15px">
+           <th>Numero facture</th>
+           <th>Client</th>
+           <th>Date de commande</th>
+           <th colspan="3">Actions</th>
+       </thead>
+       <tbody class="text-center" style="font-size: 12px">
+           <tr *ngFor="let commande of commandes | slice:startIndex:endIndex">
+               <td>{{ commande.numFacture }}</td>
+               <td class="text-left">{{ commande.Clients.lastName }} {{ commande.Clients.firstName }}</td>
+               <td>{{ commande.createdAt | date }}</td>
+               <td><a (click)="open(shower, commande.numFacture)"><i class="fas text-primary fa-eye "></i></a><td>
+               <td><a><i class="fa text-danger fa-trash-alt" (click)="openComfirmDelete(confirm,commande.numFacture)" aria-hidden="true"></i></a></td>
+           </tr>
+           <tr
+                    class="text-center text-danger"
+                    *ngIf="commandes.length === 0"
+                    style="height: 50px"
+                >
+                    <td colspan="7">Aucune commande</td>
+                </tr>
+       </tbody>
+   </table>
+   <br>
+   <div class="container">
+       <nav aria-label="Page navigation">
+         <ul class="pagination">
+           <li class="page-item " [ngClass]="{disabled: numberPage === 1}">
+             <a class="page-link" (click)='prevPage()'  aria-label="Previous">
+               <span aria-hidden="true">&laquo;</span>
+               <span class="sr-only">Previous</span>
+             </a>
+           </li>
+           <li class="page-item"  
+           *ngFor="let item of getArrayFromNumber(commandes.length);let i = index" 
+           [ngClass]="{ active: numberPage == i + 1}">
+               <a class="page-link" (click)="navigate(i+1)">{{ i +1 }}</a>
+           </li>
+           <li class="page-item"  [ngClass]="{disabled: numberPage === maxPage}">
+             <a class="page-link" (click)="nextPage()" aria-label="Next">
+               <span aria-hidden="true">&raquo;</span>
+               <span class="sr-only">Next</span>
+             </a>
+           </li>
+         </ul>
+       </nav>
+   </div>
+   <br>
+   <br>
+   <br>
+</div>
+
+<ng-template #shower let-modal>
+  <div class="modal-header" style="border-top: 10px solid rgb(170, 33, 33);">
+      <h4 class="modal-title text-uppercase" id="modal-basic-title">Element commnade par {{currentName}}</h4>
+      <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+      >
+          <span aria-hidden="true">×</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-hover table-sm table-responsive">
+        <thead class="text-center text-uppercase" style="font-size: 12px">
+            <th>Designation</th>
+            <th>quantite</th>
+            <th>P.U</th>
+            <th>Montant</th>
+            <th>Date</th>
+            <th colspan="1">Actions</th>
+        </thead>
+        <tbody class="text-center" style="font-size: 12px">
+            <tr *ngFor="let cmd of cmds ">
+                <td>{{ cmd.Produits.design}}</td>
+                <td>{{ cmd.qte }}</td>
+                <td>{{  cmd.Produits.pu}}</td>
+                <td>{{ cmd.qte * cmd.Produits.pu }}</td>
+                <td>{{ cmd.createdAt | date }}</td>
+                <td><a><i class="fa text-danger fa-trash-alt" (click)="deleteCommandeById(cmd.id)" aria-hidden="true"></i></a></td>
+ 
+            </tr>
+        </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <div class="btn-group">
+        <button
+            class="btn btn-danger btn-sm"
+            (click)=" modal.close('Save click')"
+        >
+            Fermer
+        </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- confirm modal -->
+<ng-template #confirm  let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+      <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+      >
+          <span aria-hidden="true">×</span>
+      </button>
+  </div>
+  <div class="modal-body">
+      Avez-vous sûre de supprimer cet element dans le panier ?
+  </div>
+  <div class="btn-group btn-block">
+      <button
+          class="btn btn-danger btn-sm"
+          (click)="deleteCommande(numFacture); modal.close('Save click')"
+      >
+          Oui
+      </button>
+      <button
+          class="btn btn-primary btn-sm"
+          (click)="modal.close('Save click')"
+      >
+          Non
+      </button>
+  </div>
+</ng-template>

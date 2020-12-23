@@ -10,24 +10,23 @@ import { ClientService } from 'src/app/services/client.service';
 })
 export class AddClientComponent implements OnInit {
 
-  client: Client
+  client: Client;
   constructor(private clientService: ClientService) { }
   @Output() newItemClient = new EventEmitter<any>()
   ngOnInit(): void {
   }
-  addNewClient(value : any){
+  addNewClient(value: any){
     this.newItemClient.emit(value)
   }
   onSubmit(formulaire: NgForm){
     console.log(formulaire.value);
-    const client = new Client(null,`${formulaire.value.lastName} ${formulaire.value.firstName}`,formulaire.value.contact);
+    const client = new Client(null, formulaire.value.lastName, formulaire.value.firstName , formulaire.value.contact);
     this.clientService.addClient(client).subscribe(
-      (result:any)=>{
-        this.addNewClient(result.data)
+      (result: any) => {
+        this.addNewClient(result.data);
       },
-      (error: any)=>{
+      (error: any) => {
         console.log(error);
-        
       }
     )
   }

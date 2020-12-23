@@ -1,12 +1,13 @@
 .sidenav-container {
   height: 100%;
-  background-color: rgb(221, 215, 215);
 }
 
 
 
 .sidenav {
   width: 200px;
+  background: #141414;
+
 }
 
 .sidenav .mat-toolbar{
@@ -18,4 +19,44 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  background:rgb(255, 0, 128)
+}
+
+.mat-list-item{
+  font-size: 10px;
+  color: rgb(234, 240, 241);
+  text-transform: uppercase;
+  text-align: center;
+position: relative;
+}
+.active-route{
+  background-color: rgb(255, 0, 128) !important
+}
+a{
+  transition: background-color 0.5s ease;
+
+}
+a:hover{
+  color: rgb(255, 0, 128) !important
+}
+.fa-angle-right{
+position: absolute;
+right: 20px;
+  /* margin-left: 70px; */
+}
+.menu-de{
+  padding-right: 20px;
+  font-size: 14px;
+}
+.users{
+ background-color: rgb(245, 240, 240);
+ width: 200px;
+ height: 40px;
+ border-radius: 50px;
+ 
+}
+.users {
+  font-size: 40px;
+  padding-top:1px;
+  color: #141414;
 }

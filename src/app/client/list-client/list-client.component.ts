@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { UserService } from 'src/app/services/user.service';
 import { Client } from '../../models/client';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-list-client',
@@ -13,20 +14,22 @@ import { Client } from '../../models/client';
 export class ListClientComponent implements OnInit {
   clients: Client[];
  @Output() client: Client;
-  limit:number;
+  limit = 10;
   pages: number[];
   currentPage: number;
   btnPrev: boolean;
   btnNext = true;
   // for display when we want to edit one Item
   makeEdit= false;
+  clientId: any;
   constructor(private clientService: ClientService,
               private userService: UserService,
               private activedRoute: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.limit =4;
+
     this.activedRoute.queryParams.subscribe(
       (params) => {
         // tslint:disable-next-line: radix
@@ -59,8 +62,6 @@ export class ListClientComponent implements OnInit {
   }
 
   getList(page?: number): void {
-  
-    
     this.clientService.getAllClient(page,this.limit).subscribe(
       (observe: any) => {
         const data = observe.data.rows;
@@ -95,13 +96,16 @@ export class ListClientComponent implements OnInit {
     );
   }
 
-  viewItem(id: number): void {
-alert(id);
+  openForm(content){
+    this.modalService.open(content)
   }
+  openFormForUpdate(content){
+    this.modalService.open(content)
+  }
+
   editItem(id: number): void {
     this.clientService.getOneClient(id).subscribe(
       (result: any)=>{
-        console.log(result.data.id);
         this.client = result.data;
         console.log(this.client);
         this.makeEdit = true;
@@ -121,10 +125,14 @@ alert(id);
     );
   }
   disableEdit(value: Client){
-    // to refresh current page 
+    this.modalService.dismissAll();
+    // to refresh current page
     this.getList(this.currentPage);
-    this.makeEdit = false
-    console.log('ok lets eee');
-    
+    this.makeEdit = false;
+  }
+
+  confirmModalDeleteItem(content, id){
+    this.clientId = id;
+    this.modalService.open(content)
   }
 }

@@ -22,3 +22,13 @@
      box-shadow: 1px 1px 5px 1px inset rgb(243, 240, 240); 
     height: 500px;
 }
+
+.card-header{
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+}
+.btn-add{
+    margin-right: 10px;
+    margin-top: 5px;
+}

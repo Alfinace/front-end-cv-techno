@@ -10,8 +10,8 @@ import { ClientService } from '../../services/client.service';
 })
 export class UpdateClientComponent implements OnInit {
   @Input() clientEdit: Client;
-  @Output() eventUpdateClient = new EventEmitter<any>()
-  
+  @Output() eventUpdateClient = new EventEmitter<any>();
+
   constructor(private clientService: ClientService) { }
 
   ngOnInit(): void {
@@ -19,25 +19,17 @@ export class UpdateClientComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    console.log(form);
-    
-    const client = new Client(this.clientEdit.id,`${form.value.lastName} ${form.value.firstName}`,form.value.contact);
-    console.log(client); 
-    this.clientService.updateClient(this.clientEdit.id,client).subscribe(
-      (result:any)=>{
-        console.log(result);
-        // this.addNewProduit(result.data)
-        console.log(result.data);
-        
-        this.eventAfterUpdate(result.data)
+    const client = new Client(this.clientEdit.id, form.value.lastName, form.value.firstName, form.value.contact);
+    this.clientService.updateClient(this.clientEdit.id, client).subscribe(
+      (result: any) => {
+        this.eventAfterUpdate(result.data);
       },
-      (error: any)=>{
+      (error: any) => {
         console.log(error.message);
-        
       }
-    )
+    );
   }
   eventAfterUpdate(value: any ){
-    this.eventUpdateClient.emit(value)
+    this.eventUpdateClient.emit(value);
   }
 }

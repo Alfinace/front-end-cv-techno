@@ -24,7 +24,10 @@
                     <input class="custom-control-input" type="checkbox"><span class="custom-control-label">Remember Me</span>
                 </label>
             </div>
-            <button type="submit" [disabled]="!formulaire.valid"  class="btn btn-primary btn-lg btn-block">Sign in</button>
+            <button type="submit" [disabled]="!formulaire.valid" *ngIf="!isClicked" class="btn btn-primary btn-lg btn-block">Sign in</button>
+            <button type="submit" [disabled]="!formulaire.valid" *ngIf="isClicked" class="btn btn-primary btn-lg btn-block">
+              <span class="spinner-grow spinner-grow-sm"></span>
+            </button>
         </form>
     </div>
     <div class="card-footer bg-white p-0  ">

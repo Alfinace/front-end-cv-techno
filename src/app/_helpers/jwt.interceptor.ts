@@ -14,7 +14,6 @@ import { catchError } from 'rxjs/operators';
 export class JwtInterceptor implements HttpInterceptor {
   constructor(private userService: UserService) {}
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log('Interception In Progress'); // SECTION 1
     const token: string = localStorage.getItem('x-access-token');
     const tokenizedReq = req.clone({
         setHeaders: {
@@ -27,6 +26,9 @@ export class JwtInterceptor implements HttpInterceptor {
         if (error && error.status === 401) {
           console.log('ERROR 401 UNAUTHORIZED');
           this.userService.logout();
+        }
+        if (error && error.status === 500) {
+          console.log('ERROR SERVER');
         }
         const err = error.error.message || error.statusText;
         return throwError(error);

@@ -1,67 +1,176 @@
-<div class="container-fluid">
-    <div class="tableau " [ngStyle]="{ height: '100%' }">
-        <h1 class="text-center">LISTE DE PRODUIT</h1>
-        <hr />
-        <div style="
-                display: grid;
-                grid-template-columns: auto auto;
-                grid-gap: 20px;
-                justify-content: start;
-            ">
-            <div style="padding-left: 20px; font-size: 14px" class="font-weight-lighter pt-1">
-                Taille d'affichage
-            </div>
-            <div class="form-group">
-                <select class="form-control form-control-sm" (change)="getList()" [(ngModel)]="limit">
-                    <option value="4">4</option>
-                    <option value="8">8</option>
-                    <option value="10">10</option>
-                </select>
-            </div>
-        </div>
-        <table class="table table-hover table-dark table-sm">
-            <thead class="text-center text-uppercase">
-                <th>Numero</th>
-                <th>Designation</th>
-                <th>Stock</th>
-                <th>Prix Unitaire</th>
-                <th colspan="3">Actions</th>
-            </thead>
-            <tbody class="text-center">
-                <tr *ngFor="let produit of produits">
-                    <td>{{ produit.id }}</td>
-                    <td>{{ produit.design }}</td>
-                    <td>{{ produit.stock }}</td>
-                    <td>{{ produit.pu }}</td>
-                    <td style="width: auto">
-                        <a class="btn btn-sm btn-primary " (click)="viewItem(produit.id)">Voir</a>
-                   
-                        <a class="btn btn-sm btn-success" (click)="editItem(produit.id)">Modifier</a>
-                   
-                        <a class="btn btn-sm btn-danger" (click)="deleteItem(produit.id)">Supprimer</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" (click)="getPrevListProduit()">Previous</a>
-            </li>
-            <li class="page-item" *ngFor="let page of pages">
-                <a class="page-link" (click)="getListProduit(page)">{{
-                    page
-                }}</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" *ngIf="btnNext" (click)="getNextListProduit()">Next</a>
-            </li>
-        </ul>
+<div
+    class="card bg-light mt-5"
+    style="margin: 0 auto; width: 1000px;height: auto"
+>
+    <div class="card-header bg-info text-center p-2">
+        <h4 class="mb-0 text-white text-uppercase">Liste des produits</h4>
+        <a class="text-light btn-add" (click)="openForm(addProduit)"
+            ><i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+        </a>
     </div>
-    <div>
-        <div class="card bg-light" [ngStyle]="{ padding: '10px' }">
-            <app-add-produit *ngIf="!makeEdit" (newItemProduit)="getLastList($event)"></app-add-produit>
-            <app-update-produit [produitEdit]="produit" (eventUpdateProduit)="disableEdit($event)" *ngIf="makeEdit">
-            </app-update-produit>
-        </div>
-    </div>
+    <table class="table table-hover table-sm">
+        <thead class="text-center text-uppercase" style="font-size: 15px">
+            <th>Numero</th>
+            <th>Designation</th>
+            <th>Stock</th>
+            <th>Prix Unitaire</th>
+            <th colspan="3">Actions</th>
+        </thead>
+        <tbody class="text-center" style="font-size: 12px">
+            <tr *ngFor="let produit of produits">
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.design }}</td>
+                <td>{{ produit.stock }}</td>
+                <td>{{ produit.pu }}</td>
+                <!-- <td style="width:auto">
+                <a class="text-dark" (click)="viewItem(client.id)"><i class="fa fa-eye" aria-hidden="true"></i></a>
+            </td> -->
+                <td>
+                    <a
+                        class="text-warning"
+                        (click)="
+                            editItem(produit.id); openFormForUpdate(updateProduit)
+                        "
+                        ><i class="fa fa-pencil-alt" aria-hidden="true"></i
+                    ></a>
+                </td>
+                <td>
+                    <a
+                        class="text-danger"
+                        (click)="
+                            confirmModalDeleteItem(
+                                confirmDeleteProduit,
+                                produit.id
+                            )
+                        "
+                        ><i class="fa fa-trash" aria-hidden="true"></i
+                    ></a>
+                </td>
+                <!-- <td><a (click)="open(shower, commande.numFacture)"><i class="fas text-primary fa-eye "></i></a><td>
+               <td><a><i class="fa text-danger fa-trash-alt" (click)="openComfirmDelete(confirm,commande.numFacture)" aria-hidden="true"></i></a></td> -->
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <ul class="pagination justify-content-left">
+        <li class="page-item">
+            <a
+                class="page-link"
+                (click)="getPrevListProduit()"
+                aria-label="Previous"
+            >
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li
+            class="page-item"
+            *ngFor="let page of pages; let i = index"
+            [ngClass]="{ active: currentPage == i + 1 }"
+        >
+            <a class="page-link" (click)="getListProduit(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: !btnNext }">
+            <a
+                class="page-link"
+                (click)="getNextListProduit()"
+                aria-label="Next"
+            >
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+    <br />
+    <br />
 </div>
+
+
+
+<ng-template #addProduit let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Ajout produit</h4>
+        <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="d('Cross click')"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+    <app-add-produit *ngIf="!makeEdit" (newItemProduit)="getLastList($event)"></app-add-produit>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="c('Close click')"
+        >
+            Fermer
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #updateProduit let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Mis à jour d'un client</h4>
+        <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="d('Cross click')"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-update-produit [produitEdit]="produit" (eventUpdateProduit)="disableEdit($event)" *ngIf="makeEdit">
+        </app-update-produit>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button btn-danger "
+            class="btn btn-secondary"
+            (click)="c('Close click')"
+        >
+            Fermer
+        </button>
+    </div>
+</ng-template>
+
+<!-- confirm  -->
+
+<!-- confirm modal -->
+<ng-template #confirmDeleteProduit let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+        <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+        >
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Avez-vous sûre de supprimer cet client ?
+    </div>
+    <div class="btn-group btn-block">
+        <button
+            class="btn btn-danger "
+            (click)="deleteItem(produitId); modal.close('Save click')"
+        >
+            Oui
+        </button>
+        <button
+            class="btn btn-primary"
+            (click)="modal.close('Save click')"
+        >
+            Non
+        </button>
+    </div>
+</ng-template>

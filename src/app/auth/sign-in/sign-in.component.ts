@@ -16,6 +16,7 @@ export class SignInComponent implements OnInit {
   message = null;
   defaultValueEmail = null;
   defaultValuePassword = null;
+  isClicked = false;
   constructor(private userService: UserService,
               private router: Router
               ){ }
@@ -26,17 +27,20 @@ export class SignInComponent implements OnInit {
     }
   }
   onSubmit(formulaire: NgForm): void {
+    this.isClicked  = true;
     this.userService.login(formulaire.value._email, formulaire.value._password).subscribe((res: HttpResponse<any>) => {
+    this.isClicked  = false;
       this.router.navigateByUrl('/admin');
     }, (err: any) => {
       if (err.status === 401) {
         this.message = err.error.error;
         formulaire.onReset();
+        this.isClicked  = false;
         setTimeout(() => {
-          this.message = null;
-        }, 5000);
-      }
-    });
+              this.message = null;
+            }, 5000);
+          }
+        });
   }
 
 }
