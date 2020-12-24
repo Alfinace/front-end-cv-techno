@@ -23,8 +23,10 @@ export class ProduitService {
   getOneProduit(id: number){
   return  this.webReqService.get(`produit/${id}`);
   }
-  
   getAllProduit(page?: number, limit?: number){
     return this.webReqService.get(`produit/list?page=${page}&limit=${limit}`);
+  }
+  searchProduit(keyWord: any){
+    return this.webReqService.get(`produit/search?key_word=${keyWord}`);
   }
 }

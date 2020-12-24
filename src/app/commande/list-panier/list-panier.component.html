@@ -22,9 +22,8 @@
             En attente reponse au serveur ...
         </div>
     </div>
-    <div class="card-header bg-info text-center p-3">
-        <h4 class="mb-0 text-white">Panier du commande</h4>
-        <span><i class="fas fa-cart-plus fa-2x fa-fw"></i></span>
+    <div class="card-header bg-primary  p-2">
+        <h5 class=" text-white text-uppercase">Panier du commande</h5>
     </div>
     <div class="card-body border-top">
         <table class="table table-hover table-sm">
@@ -59,7 +58,7 @@
                     *ngIf="paniers.length === 0"
                     style="height: 50px"
                 >
-                    <td colspan="7">Aucun panier</td>
+                    <td colspan="7" style="font-style: italic;">Aucun panier</td>
                 </tr>
             </tbody>
         </table>
@@ -93,7 +92,7 @@
         <div class="m-2 text-uppercase" *ngIf="(onePanierEditable.stock - onePanierEditable.qte) > 0 ">
             Stockage disponible : <span class=" text-success">{{ onePanierEditable.stock - onePanierEditable.qte}}</span>
         </div>
-        <div class="m-2 text-danger text-uppercase" *ngIf="(onePanierEditable.stock - onePanierEditable.qte) <= 0 ">
+        <div class="m-2 alert alert-danger" *ngIf="(onePanierEditable.stock - onePanierEditable.qte) <= 0 ">
             Stockage n'est pas suffisant pour la quantité choisie
         </div>
         <div class="d-flex justify-content-between text-uppercase text-dark font-weight-bolder  mb-3">
@@ -111,8 +110,10 @@
           </div>
           
           <div class="d-flex justify-content-between text-uppercase text-dark font-weight-bolder  mb-3">
-            <div class="p-2 "><input class="form-control" [(ngModel)]="onePanierEditable.qte"  style="width: 100px;" type="number" name="qte" id=""></div>
-            <div *ngIf="(onePanierEditable.stock - onePanierEditable.qte) > 0 " class="p-2 ">
+            <div class="p-2 ">
+                <input class="form-control" min="1" [(ngModel)]="onePanierEditable.qte"  style="width: 100px;" type="number" name="qte" id="">
+            </div>
+            <div *ngIf="(onePanierEditable.stock - onePanierEditable.qte) > 0 && onePanierEditable.qte > 0" class="p-2 ">
                 <button type="button" (click)="update_panier();c('Close click')" class="btn btn-primary">
                     Mettre à jour
                 </button>

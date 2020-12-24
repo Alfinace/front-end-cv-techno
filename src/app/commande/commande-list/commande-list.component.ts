@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,7 +42,7 @@ export class CommandeListComponent implements OnInit {
 
     open(content, index) {
         this.modalService
-        .open(content, { ariaLabelledBy: 'modal-basic-title'})
+        .open(content, { ariaLabelledBy: 'modal-basic-title',size:'lg',scrollable:true})
         .result.then(
             (result) => {
                 this.closeResult = `Closed with: ${result}`;
@@ -61,7 +61,7 @@ export class CommandeListComponent implements OnInit {
         this.commandeService.commandeByFacture(index).subscribe(
             (data: any) => {
                 this.cmds = data.command;
-                this.currentName = this.cmds[0].Clients.name;
+                this.currentName = this.cmds[0].Clients.lastName;
                 console.log(this.cmds);
 
             },
@@ -104,6 +104,7 @@ export class CommandeListComponent implements OnInit {
     }
 
     getArrayFromNumber(len: number) {
+        // tslint:disable-next-line: radix
         const l = parseInt((len / this.size + 0.5).toFixed(0));
         this.maxPage = l;
         return new Array(l);
@@ -112,10 +113,10 @@ export class CommandeListComponent implements OnInit {
     getList(page?: number): void {
         this.commandeService.list().subscribe(
             (observe: any) => {
-                this.currentNumFact = observe.list[0].numFacture;
-                this.commandes = observe.list;
-                console.log(this.commandes);
-                
+                if (observe.list.length > 0 ) {
+                    this.currentNumFact = observe.list[0].numFacture;
+                    this.commandes = observe.list;
+                }
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 401) {

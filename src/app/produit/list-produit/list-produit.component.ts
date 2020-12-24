@@ -13,9 +13,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ListProduitComponent implements OnInit {
     produits: Produit[];
+    keyWord = '';
     produitId: any;
     produit: any;
-    limit = 20;
+    limit = 10;
     pages: number[];
     currentPage: number;
     btnPrev: boolean;
@@ -128,5 +129,22 @@ export class ListProduitComponent implements OnInit {
         // to refresh current page
         this.getList(this.currentPage);
         this.makeEdit = false;
+    }
+
+    searchProduit(){
+        if (this.keyWord === ''){
+            this.getList(this.currentPage);
+        }else{
+            this.produitService.searchProduit(this.keyWord).subscribe((observe: any) => {
+                if (observe.produits) {
+                    this.produits = observe.produits;
+                }
+            }, (error: HttpErrorResponse) => {
+                if (error.status === 401) {
+                    this.userService.logout();
+                }
+                console.log(error);
+            });
+        }
     }
 }

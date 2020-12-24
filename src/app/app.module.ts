@@ -42,6 +42,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LayoutHomeComponent } from './layouts/layout-home/layout-home.component';
 import { NumberToLetterService } from './services/numberToLetter.service';
 import { CommandeListComponent } from './commande/commande-list/commande-list.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { AreaComponent } from './widgets/area/area.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +65,7 @@ import { CommandeListComponent } from './commande/commande-list/commande-list.co
     DashboardComponent,
     LayoutHomeComponent,
     CommandeListComponent,
+    AreaComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ import { CommandeListComponent } from './commande/commande-list/commande-list.co
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    HighchartsChartModule
   ],
   providers: [
     WebRequestService,

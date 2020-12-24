@@ -22,12 +22,12 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
     styleUrls: ['./list-panier.component.css'],
 })
 export class ListPanierComponent implements OnInit {
-    paniers = <any> [];
-    facture = <any> [];
+    paniers = <any>[];
+    facture = <any>[];
     currentClient: Client;
     price_total = 0;
     onePanierEditable: any;
-    priceTotal: number;
+    priceTotal = 0;
     closeResult: string;
     indexElementDelete = null;
     isBtnWait = false;
@@ -41,33 +41,35 @@ export class ListPanierComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        var data = <any> [];
+        var data = <any>[];
         data = JSON.parse(sessionStorage.getItem('panier'));
         this.fetchData(data);
     }
 
     open(content, index) {
         this.indexElementDelete = index;
-        this.modalService
-            .open(content, { ariaLabelledBy: 'modal-basic-title' })
+        this.modalService.open(content, {
+            ariaLabelledBy: 'modal-basic-title',
+        });
     }
 
-    update_panier(){
-        const data = [] = JSON.parse(sessionStorage.getItem('panier'));
-        const panierUpdate = {produitId : this.onePanierEditable.id, qte: this.onePanierEditable.qte};
+    update_panier() {
+        const data = ([] = JSON.parse(sessionStorage.getItem('panier')));
+        const panierUpdate = {
+            produitId: this.onePanierEditable.id,
+            qte: this.onePanierEditable.qte,
+        };
         data.splice(this.onePanierEditable.index, 1, panierUpdate);
         sessionStorage.setItem('panier', JSON.stringify(data));
         this.fetchData(data);
-
     }
     edit_panier(content, index, id, design, qte, pu) {
         this.produitService.getOneProduit(id).subscribe((result: any) => {
             const stock = result.data.stock;
-            this.onePanierEditable = {index, id, design, qte, pu, stock}
-
-    })
+            this.onePanierEditable = { index, id, design, qte, pu, stock };
+        });
         this.modalService
-            .open(content, { ariaLabelledBy: 'modal-basic-title',size: 'lg', backdrop: 'static',windowClass:'animated slideInUp'})
+            .open(content, { ariaLabelledBy: 'modal-basic-titles' })
             .result.then(
                 (result) => {
                     this.closeResult = `Closed with: ${result}`;
@@ -89,39 +91,44 @@ export class ListPanierComponent implements OnInit {
         }
     }
     fetchData(data: any[]): void {
-        var data_temp = <any> [];
+        var data_temp = <any>[];
         var price_total = 0;
         // tslint:disable-next-line: prefer-for-of
-        if (data.length === 0) {
+        if (!data) {
             this.priceTotal = 0;
-        }
-        for (let i = 0; i < data.length; i++) {
-            const panier = data[i];
-            this.produitService.getOneProduit(panier.produitId)
-                .subscribe((produit: any) => {
-                    var data_tmp = {
-                        id: produit.data.id,
-                        design: produit.data.design,
-                        pu: produit.data.pu,
-                        quantite: panier.qte,
-                    };
-                    price_total = price_total + data_tmp.pu * data_tmp.quantite;
-                    data_temp.push(data_tmp);
-                    this.isWait = false;
-                    this.priceTotal = price_total;
-                });
+        } else {
+            // tslint:disable-next-line: prefer-for-of
+            for (let i = 0; i < data.length; i++) {
+                const panier = data[i];
+                this.produitService
+                    .getOneProduit(panier.produitId)
+                    .subscribe((produit: any) => {
+                        var data_tmp = {
+                            id: produit.data.id,
+                            design: produit.data.design,
+                            pu: produit.data.pu,
+                            quantite: panier.qte,
+                        };
+                        price_total =
+                            price_total + data_tmp.pu * data_tmp.quantite;
+                        data_temp.push(data_tmp);
+                        this.isWait = false;
+                        this.priceTotal = price_total;
+                    });
+            }
         }
         this.isWait = false;
         this.paniers = data_temp;
     }
     deleteItem(index: number) {
-        let paniers = <any> [];
+        let paniers = <any>[];
         console.log(index);
         paniers = JSON.parse(sessionStorage.getItem('panier'));
         paniers.splice(index, 1);
         sessionStorage.setItem('panier', JSON.stringify(paniers));
         this.paniers = [];
         this.fetchData(paniers);
+        this.priceTotal = 0
     }
 
     validate() {
@@ -180,7 +187,10 @@ export class ListPanierComponent implements OnInit {
                             style: ['name', 'prefixe'],
                         },
                         {
-                            text: this.currentClient.lastName +' '+ this.currentClient.firstName,
+                            text:
+                                this.currentClient.lastName +
+                                ' ' +
+                                this.currentClient.firstName,
                             style: 'name',
                             marginLeft: -170,
                         },

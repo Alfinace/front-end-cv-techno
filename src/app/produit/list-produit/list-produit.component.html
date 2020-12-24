@@ -1,13 +1,22 @@
 <div
-    class="card bg-light mt-5"
+    class="card bg-light mt-2"
     style="margin: 0 auto; width: 1000px;height: auto"
 >
-    <div class="card-header bg-info text-center p-2">
+    <div class="card-header bg-primary text-center ">
         <h4 class="mb-0 text-white text-uppercase">Liste des produits</h4>
         <a class="text-light btn-add" (click)="openForm(addProduit)"
             ><i class="fa fa-plus fa-2x" aria-hidden="true"></i>
         </a>
     </div>
+    <div class="d-flex p-1 flex-row-reverse  text-white">
+        <div class="input-group mb-3" style="width: 300px;">
+            <input type="text" class="form-control form-control-lg" [(ngModel)]="keyWord" (keyup)="searchProduit()" placeholder="Recherche du produit">
+            <div class="input-group-append">
+              <button class="btn btn-primary btn-sm" (click)="searchProduit()"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          
+      </div>
     <table class="table table-hover table-sm">
         <thead class="text-center text-uppercase" style="font-size: 15px">
             <th>Numero</th>
@@ -27,7 +36,7 @@
             </td> -->
                 <td>
                     <a
-                        class="text-warning"
+                        class="text-dark"
                         (click)="
                             editItem(produit.id); openFormForUpdate(updateProduit)
                         "
@@ -36,7 +45,7 @@
                 </td>
                 <td>
                     <a
-                        class="text-danger"
+                        class="text-dark"
                         (click)="
                             confirmModalDeleteItem(
                                 confirmDeleteProduit,
@@ -49,11 +58,18 @@
                 <!-- <td><a (click)="open(shower, commande.numFacture)"><i class="fas text-primary fa-eye "></i></a><td>
                <td><a><i class="fa text-danger fa-trash-alt" (click)="openComfirmDelete(confirm,commande.numFacture)" aria-hidden="true"></i></a></td> -->
             </tr>
+            <tr
+                    class="text-center"
+                    *ngIf="produits.length === 0"
+                    style="height: 50px"
+                >
+                    <td colspan="7" style="font-style: italic;">Aucun element trouvé</td>
+                </tr>
         </tbody>
     </table>
     <br />
     <br />
-    <ul class="pagination justify-content-left">
+    <ul class="pagination pagination-sm justify-content-left" *ngIf="keyWord === ''">
         <li class="page-item">
             <a
                 class="page-link"
