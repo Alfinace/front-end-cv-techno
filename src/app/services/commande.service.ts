@@ -24,5 +24,8 @@ export class CommandeService {
   commandeDeleteByIdCommande(commande_id){
     return this.webReqService.delete(`command/delete/command?id=${commande_id}`);
   }
+  commandeForChart(){
+    return this.webReqService.get(`command/chart`);
+  }
 
 }

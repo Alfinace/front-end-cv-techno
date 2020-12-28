@@ -6,6 +6,7 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 import { fader, slidder } from './route-animation';
 import { RouterOutlet } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-nav',
@@ -29,7 +30,8 @@ export class NavComponent  implements OnInit{
   email: any;
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private userService: UserService) {}
+              private userService: UserService,
+              private flashMessage: FlashMessagesService) {}
 
   ngOnInit(): void {
     const userId = JSON.parse(localStorage.getItem('_id'));
@@ -41,7 +43,12 @@ export class NavComponent  implements OnInit{
     });
     this.isLoggedIn$ = this.userService.isLoggedIn;
   }
-
+  showFlash() {
+    // 1st parameter is a flash message text
+    // 2nd parameter is optional. You can pass object with options.
+    this.flashMessage.grayOut(false);
+    this.flashMessage.show('Welcome To TheRichPost.com', { cssClass: 'alert-success', timeout: 2000 });
+}
   onLogout(){
     this.userService.logout();
   }

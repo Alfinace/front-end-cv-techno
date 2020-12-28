@@ -22,9 +22,9 @@ const routes: Routes = [
       {path: 'admin', component: DashboardComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } },
       {path: 'produit/list', component: ListProduitComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' },},
       {path: 'client/list', component: ListClientComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } },
-      {path: 'commande', component: CommandeComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } },
+      {path: 'commande/create', component: CommandeComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } },
       {path: 'commande/list', component: ListPanierComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } },
-      {path: 'commande/histo', component: CommandeListComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } }
+      {path: 'commande/historique', component: CommandeListComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } }
     ]
   },
   {path: 'login', component: SignInComponent},

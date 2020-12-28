@@ -15,14 +15,15 @@
                 <i class="fas fa-people-carry menu-de  "></i> Client
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
             </a>
-            <a mat-list-item [routerLink]="['/commande']" routerLinkActive="active-route">
+            <a mat-list-item [routerLink]="['/commande/create']" routerLinkActive="active-route">
                 <i class="fa fa-shopping-cart menu-de" aria-hidden="true"></i> Commande
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
             </a>
-            <a mat-list-item [routerLink]="['/commande/histo']" routerLinkActive="active-route">Historiques du commande
+            <a mat-list-item [routerLink]="['/commande/historique']" routerLinkActive="active-route">
+                <i class="fa fa-history menu-de" aria-hidden="true"></i> Historiques 
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
             </a>
-            <a mat-list-item [routerLink]="['/user/list']" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['/user/list']" (click)="showFlash()" routerLinkActive="active">
                 <i class="fa fa-users menu-de" aria-hidden="true"></i> Gestion utilisateur
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
             </a>
@@ -50,6 +51,7 @@
         <!-- <main [@routeAnimations]="prepareRoute(outlet)" class="content">
           <router-outlet #outlet="outlet"></router-outlet>
         </main> -->
+        <!-- <flash-messages></flash-messages> -->
           <router-outlet #outlet="outlet"></router-outlet>
         </mat-sidenav-content>
 </mat-sidenav-container>

@@ -44,6 +44,7 @@ import { NumberToLetterService } from './services/numberToLetter.service';
 import { CommandeListComponent } from './commande/commande-list/commande-list.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { AreaComponent } from './widgets/area/area.component';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +84,8 @@ import { AreaComponent } from './widgets/area/area.component';
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    FlashMessagesModule.forRoot(),
   ],
   providers: [
     WebRequestService,
