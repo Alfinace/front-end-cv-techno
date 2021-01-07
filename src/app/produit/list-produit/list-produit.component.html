@@ -15,7 +15,6 @@
               <button class="btn btn-primary btn-sm" (click)="searchProduit()"><i class="fa fa-search" aria-hidden="true"></i></button>
             </div>
           </div>
-          
       </div>
     <table class="table table-hover table-sm">
         <thead class="text-center text-uppercase" style="font-size: 15px">
@@ -63,7 +62,7 @@
                     *ngIf="produits.length === 0"
                     style="height: 50px"
                 >
-                    <td colspan="7" style="font-style: italic;">Aucun element trouvé</td>
+                    <td colspan="7" style="font-style: italic;">{{ msg_empty_table }}</td>
                 </tr>
         </tbody>
     </table>
@@ -117,7 +116,7 @@
         </button>
     </div>
     <div class="modal-body">
-    <app-add-produit *ngIf="!makeEdit" (newItemProduit)="getLastList($event)"></app-add-produit>
+    <app-add-produit (newItemProduit)="getLastList($event)"></app-add-produit>
     </div>
     <div class="modal-footer">
         <button
@@ -143,7 +142,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <app-update-produit [produitEdit]="produit" (eventUpdateProduit)="disableEdit($event)" *ngIf="makeEdit">
+        <app-update-produit [produitEdit]="produit" (eventUpdateProduit)="disableEdit($event)">
         </app-update-produit>
     </div>
     <div class="modal-footer">
@@ -173,7 +172,7 @@
         </button>
     </div>
     <div class="modal-body">
-        Avez-vous sûre de supprimer cet client ?
+        Avez-vous sûre de supprimer cet produit ?
     </div>
     <div class="btn-group btn-block">
         <button

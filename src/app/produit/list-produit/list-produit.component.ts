@@ -12,17 +12,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./list-produit.component.css'],
 })
 export class ListProduitComponent implements OnInit {
+    msg_empty_table = "Aucun élement";
     produits: Produit[];
     keyWord = '';
     produitId: any;
     produit: any;
     limit = 10;
-    pages: number[];
+    pages = new Array();
     currentPage: number;
     btnPrev: boolean;
     btnNext = true;
-    // for display when we want to edit one Item
-    makeEdit = false;
     constructor(
         private produitService: ProduitService,
         private userService: UserService,
@@ -58,7 +57,6 @@ export class ListProduitComponent implements OnInit {
         this.getList(page);
     }
     getLastList(value: Produit) {
-        console.log(value);
         this.getList(this.pages.length);
     }
 
@@ -80,8 +78,6 @@ export class ListProduitComponent implements OnInit {
                 }
                 this.pages = element;
                 this.currentPage = page;
-                console.log(page < this.pages.length);
-
                 if (page < this.pages.length) {
                     this.btnNext = true;
                 } else {
@@ -107,9 +103,7 @@ export class ListProduitComponent implements OnInit {
         this.modalService.open(content);
     }
     editItem(id: number): void {
-        this.makeEdit = true;
         this.produitService.getOneProduit(id).subscribe((result: any) => {
-            console.log(result);
             this.produit = result.data;
         });
     }
@@ -128,7 +122,6 @@ export class ListProduitComponent implements OnInit {
         this.modalService.dismissAll();
         // to refresh current page
         this.getList(this.currentPage);
-        this.makeEdit = false;
     }
 
     searchProduit(){
@@ -137,6 +130,7 @@ export class ListProduitComponent implements OnInit {
         }else{
             this.produitService.searchProduit(this.keyWord).subscribe((observe: any) => {
                 if (observe.produits) {
+                    this.msg_empty_table = "Aucun élement trouve"
                     this.produits = observe.produits;
                 }
             }, (error: HttpErrorResponse) => {

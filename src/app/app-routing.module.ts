@@ -11,6 +11,7 @@ import { CommandeComponent } from './commande/commande/commande.component';
 import { ListPanierComponent } from './commande/list-panier/list-panier.component';
 import { LayoutHomeComponent } from './layouts/layout-home/layout-home.component';
 import { CommandeListComponent } from './commande/commande-list/commande-list.component';
+import { ChiffreAffaireComponent } from './commande/chiffre-affaire/chiffre-affaire.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
       {path: 'client/list', component: ListClientComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } },
       {path: 'commande/create', component: CommandeComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } },
       {path: 'commande/list', component: ListPanierComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } },
-      {path: 'commande/historique', component: CommandeListComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } }
+      {path: 'commande/historique', component: CommandeListComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } },
+      {path: 'chiffre/affaire', component: ChiffreAffaireComponent, canActivate: [AuthGuard], data: { animation: 'isLeft' } }
     ]
   },
   {path: 'login', component: SignInComponent},

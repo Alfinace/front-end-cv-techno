@@ -42,6 +42,13 @@ export class NavComponent  implements OnInit{
 
     });
     this.isLoggedIn$ = this.userService.isLoggedIn;
+    // var time = setInterval(()=>{
+    //   this.userService.getOneUser(userId).subscribe((user: any) => {
+    //     this.email = user.data.e;
+    //   }, (error) => {
+    //    clearInterval(time)
+    //   });
+    // },2000)
   }
   showFlash() {
     // 1st parameter is a flash message text

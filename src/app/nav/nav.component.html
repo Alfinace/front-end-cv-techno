@@ -23,6 +23,10 @@
                 <i class="fa fa-history menu-de" aria-hidden="true"></i> Historiques 
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
             </a>
+            <a mat-list-item [routerLink]="['/chiffre/affaire']"  routerLinkActive="active">
+                <i class="fa fa-people-carry menu-de" aria-hidden="true"></i> Chiffre d'affaire
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
             <a mat-list-item [routerLink]="['/user/list']" (click)="showFlash()" routerLinkActive="active">
                 <i class="fa fa-users menu-de" aria-hidden="true"></i> Gestion utilisateur
                 <i class="fa fa-angle-right" aria-hidden="true"></i>

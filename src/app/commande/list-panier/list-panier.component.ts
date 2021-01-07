@@ -44,6 +44,12 @@ export class ListPanierComponent implements OnInit {
         var data = <any>[];
         data = JSON.parse(sessionStorage.getItem('panier'));
         this.fetchData(data);
+        var time = setInterval(()=>{
+            if (!sessionStorage.getItem('client_id')) {
+                this.router.navigateByUrl('/commande/create')
+                clearInterval(time)
+            }
+          },2000)
     }
 
     open(content, index) {
@@ -144,7 +150,6 @@ export class ListPanierComponent implements OnInit {
                     this.currentClient = result.facture[0].Clients;
                     this.facture = result.facture;
                     this.generatePDF(this.facture);
-                    this.router.navigate(['/commande']);
                 },
                 (error: HttpErrorResponse) => {
                     console.log(error);

@@ -30,4 +30,7 @@ export class ClientService {
   getAll(){
     return this.webReqService.get(`client/all`);
   }
+  searchClient(keyWord: any){
+    return this.webReqService.get(`client/search?key_word=${keyWord}`);
+  }
 }

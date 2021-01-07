@@ -13,6 +13,6 @@
             <input type="number"
               class="form-control form-control-lg" name="pu" id="" [(ngModel)]="produitEdit.pu" required aria-describedby="helpId" placeholder="Prix Unitaire">
           </div>
-          <button type="submit"  class="btn btn-primary btn-block btn-lg">Mettre à jour </button>
+          <button type="submit" [disabled]="form.invalid"  class="btn btn-primary btn-block btn-lg">Mettre à jour </button>
     </form>
 </div>

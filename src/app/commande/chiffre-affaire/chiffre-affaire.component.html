@@ -1,0 +1,37 @@
+<div class=" card bg-light mt-5 shadow" style="margin:0 auto; width:1000px;height: auto;">
+    <div class="card-header bg-primary  p-1" style="position: relative;">
+    </div>
+    <div style="margin-left:50px;" class="mt-5 mb-5">
+        <h4 class="text-uppercase">Chiffres d'affaires par client</h4>
+        <div style="width: 500px; display: flex; flex-direction: row;">
+            <div style="margin-right:50px;margin-top:5px;">Choisir anneé :</div>
+            <div>
+                <select [(ngModel)]="year" (change)="changeYear()" class="custom-select text-center"
+                    style="background: transparent !important; border: none;border-bottom: 2px solid rgb(81, 106, 253);width: 100px;">
+                    <option a-nfr *ngFor="let item2 of years" value="{{ item2 }}">{{item2}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-sm">
+        <thead class="text-center text-uppercase" style="font-size: 15px">
+            <th>Numero</th>
+            <th>Nom</th>
+            <th>chiffre d'affaire</th>
+        </thead>
+        <tbody class="text-center" style="font-size: 12px">
+            <tr *ngFor="let chf of chiffre_affaire">
+                <td>{{ chf.clientId }}</td>
+                <td class="">{{ chf.lastName}} {{ chf.firstName }}</td>
+                <td>{{ chf.montant }}</td>
+            </tr>
+            <tr class="text-center " *ngIf="chiffre_affaire.length === 0" style="height: 100px">
+                <td colspan="7" style="font-style: italic;"><code>Aucune donneé dans cette année {{ year }}</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <div style="position: relative;" class="m-5 ">
+        <h4 class="text-primary" style="position: absolute;right: 50px;">TOTAL : {{ somme }}<sub>Ar</sub></h4>
+    </div>
+</div>

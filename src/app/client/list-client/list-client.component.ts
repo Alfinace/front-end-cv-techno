@@ -12,6 +12,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./list-client.component.css']
 })
 export class ListClientComponent implements OnInit {
+  msg_empty_table ="Aucun élement"
+  keyWord = '';
   clients: Client[];
  @Output() client: Client;
   limit = 10;
@@ -135,4 +137,21 @@ export class ListClientComponent implements OnInit {
     this.clientId = id;
     this.modalService.open(content)
   }
+  searchClient(){
+    if (this.keyWord === ''){
+        this.getList(this.currentPage);
+    }else{
+        this.clientService.searchClient(this.keyWord).subscribe((observe: any) => {
+            if (observe.clients) {
+              this.msg_empty_table = "Aucun élement trouvé"
+                this.clients = observe.clients;
+            }
+        }, (error: HttpErrorResponse) => {
+            if (error.status === 401) {
+                this.userService.logout();
+            }
+            console.log(error);
+        });
+    }
+}
 }

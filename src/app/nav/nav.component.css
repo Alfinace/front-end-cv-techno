@@ -10,6 +10,7 @@
 
 }
 
+
 .sidenav .mat-toolbar{
   background: inherit;
   transform: scale(0.7);
@@ -19,25 +20,25 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  background:rgb(255, 0, 128)
+  background:#141414
 }
 
 .mat-list-item{
   font-size: 10px;
   color: rgb(234, 240, 241);
-  text-transform: uppercase;
+  font-family: 'Circular Std Medium';
   text-align: center;
 position: relative;
 }
 .active-route{
-  background-color: rgb(255, 0, 128) !important
+  background-color: #5969ff !important
 }
 a{
   transition: background-color 0.5s ease;
 
 }
 a:hover{
-  color: rgb(255, 0, 128) !important
+  background-color:#596aff6e !important
 }
 .fa-angle-right{
 position: absolute;

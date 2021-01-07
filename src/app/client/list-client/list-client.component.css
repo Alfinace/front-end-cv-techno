@@ -14,9 +14,7 @@
     grid-gap: 50px;
     padding: 50;
 }
-.btn{
-    transform: scale(0.7);
-}
+
 .card{
     /* border: none; */
      box-shadow: 1px 1px 5px 1px inset rgb(243, 240, 240); 

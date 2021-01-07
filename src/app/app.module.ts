@@ -45,6 +45,7 @@ import { CommandeListComponent } from './commande/commande-list/commande-list.co
 import { HighchartsChartModule } from 'highcharts-angular';
 import { AreaComponent } from './widgets/area/area.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
+import { ChiffreAffaireComponent } from './commande/chiffre-affaire/chiffre-affaire.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
     LayoutHomeComponent,
     CommandeListComponent,
     AreaComponent,
+    ChiffreAffaireComponent,
   ],
   imports: [
     BrowserModule,

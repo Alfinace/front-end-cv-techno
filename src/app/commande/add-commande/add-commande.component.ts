@@ -7,6 +7,8 @@ import { UserService } from 'src/app/services/user.service';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CommandeService } from '../../services/commande.service';
+import { ClientService } from '../../services/client.service';
+import { Client } from 'src/app/models/client';
 
 @Component({
     selector: 'app-add-commande',
@@ -15,6 +17,7 @@ import { CommandeService } from '../../services/commande.service';
 })
 export class AddCommandeComponent implements OnInit {
     produits = [];
+    currentClient : any;
     size = 10;
     maxPage:number;
     numberPage :number;
@@ -24,6 +27,7 @@ export class AddCommandeComponent implements OnInit {
         private commandeService: CommandeService,
         private userService: UserService,
         private activedRoute: ActivatedRoute,
+        private clientService: ClientService,
         private router: Router
     ) {}
 
@@ -32,7 +36,7 @@ export class AddCommandeComponent implements OnInit {
         this.startIndex = 0;
         this.endIndex = this.size;
         this.numberPage = 1
-    
+        this.getCurrentClient()
     }
 
     navigate(num_page: number){
@@ -109,5 +113,12 @@ export class AddCommandeComponent implements OnInit {
             sessionStorage.setItem('panier', JSON.stringify(currentData));
         }
         this.getList()
+    }
+
+    getCurrentClient(){
+        const client_id = JSON.parse(sessionStorage.getItem('client_id'))
+        this.clientService.getOneClient(client_id).subscribe((observe: any)=>{
+            this.currentClient = observe.data;
+        })
     }
 }

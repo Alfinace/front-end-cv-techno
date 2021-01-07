@@ -1,7 +1,70 @@
 <div class=" card bg-light mt-5" style="margin:0 auto; width:1000px;height: auto;">
-    <div class="card-header bg-info text-center p-2">
+    <div class="card-header bg-primary text-center p-2">
        <h4 class="mb-0 text-white text-uppercase"> Liste du commande   </h4>
    </div>
+   <div class="row" style="transform: scale(0.8);">
+       <div class="col-lg-4 text-center">
+            <h6 class="text-center mt-3 text-uppercase text-underline">Mode de recherche</h6>
+            <form class="text-center">
+                <div class="custom-control custom-radio custom-control-inline" (click)="mode(true)">
+                  <input type="radio" class="custom-control-input" id="mode1" name="example"   checked value="date">
+                  <label class="custom-control-label text-dark" for="mode1">Entre deux date</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline" (click)="mode(false)">
+                  <input type="radio" class="custom-control-input" id="mode2" name="example" value="month">
+                  <label class="custom-control-label text-dark" for="mode2">Mois/Année</label>
+                </div>
+              </form> 
+       </div>
+       <div class="col-lg-8">
+        <div class="d-flex p-1 flex-row-reverse  " *ngIf="mode_date">
+            <div class="input-group mb-3 m-4" style="width: 190px;">
+              <input type="date" class="form-control form-control-lg" [(ngModel)]="end_date" placeholder="Date fin">
+              <div class="input-group-append">
+                <button class="btn btn-primary btn-sm" [disabled] =" end_date === undefined || start_date === undefined" (click)="searchProduit()"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <span class="m-4">jusqu'au</span>
+            <div class="input-group mb-3 m-4" style="width: 190px;">
+              <input  type="date" class="form-control form-control-lg" [(ngModel)]="start_date"  placeholder="Date debut">
+            </div>
+            <span class="m-4">Depuis au</span>
+        </div>
+        
+        <div class="d-flex p-1 flex-row-reverse text-center" *ngIf="!mode_date">
+            <div class="input-group mb-3 m-4" style="width: 150px;">
+              <select [(ngModel)]="month" class="form-control form-control-lg">
+                  <!-- <option value="">Tous</option> -->
+                  <option *ngFor="let item of months; let i = index" [value]="item[index]">{{item[1]}}</option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-primary btn-sm" (click)="searchCommande()"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <!-- <div class="input-group mb-3" style="width: 100px;">
+                <input type="number" class="form-control form-control-lg" [(ngModel)]="size_year">
+            </div> -->
+            <div class="input-group mb-3 m-4" style="width: 100px;">
+                <select [(ngModel)]="year" class="form-control form-control-lg">
+                    <option a-nfr *ngFor="let item2 of years" value="{{ item2 }}">{{item2}}</option>
+                </select>
+              </div>
+        </div>
+        <div class="  "  style="width:300px">
+          <div class="form-group" >
+              <label for=""></label>
+              <select class="form-control form-control-sm text-dark" name="" (change)="changeClient()"  id="" [(ngModel)]='clientID'>
+                  <option value="" selected >Selectionnez un client</option>
+                  <option *ngFor="let client of clients" value="{{client.id}}">{{ client.lastName }} {{ client.firstName }}</option>
+              </select>
+          </div>
+      </div>
+    </div>
+   </div>
+   <a class="btn btn-sm btn-primary mb-3" style="width: 150px;"  (click)= "refresh()">
+    Actualiser la liste
+   </a>
+   
    <table class="table table-hover table-sm">
        <thead class="text-center text-uppercase" style="font-size: 15px">
            <th>Numero facture</th>
@@ -9,7 +72,7 @@
            <th>Date de commande</th>
            <th colspan="3">Actions</th>
        </thead>
-       <tbody class="text-center" style="font-size: 12px">
+       <tbody class="text-center" style="font-size: 12px;position: relative;">
            <tr *ngFor="let commande of commandes | slice:startIndex:endIndex">
                <td>{{ commande.numFacture }}</td>
                <td class="text-left">{{ commande.Clients.lastName }} {{ commande.Clients.firstName }}</td>
@@ -17,12 +80,13 @@
                <td><a (click)="open(shower, commande.numFacture)"><i class="fas text-primary fa-eye "></i></a><td>
                <td><a><i class="fa text-danger fa-trash-alt" (click)="openComfirmDelete(confirm,commande.numFacture)" aria-hidden="true"></i></a></td>
            </tr>
-           <tr
+           <div *ngIf="isLoading" style="position:absolute; top: 50%;right:50%; width: 40px; height: 40px;" class="spinner-grow text-muted"></div>
+         <tr
                     class="text-center text-danger"
                     *ngIf="commandes.length === 0"
-                    style="height: 50px"
-                >
-                    <td colspan="7">Aucune commande</td>
+                    style="height: 150px"
+                >  
+                    <td colspan="7">{{ msg_empty_table }}</td>
                 </tr>
        </tbody>
    </table>
@@ -75,15 +139,20 @@
             <th>P.U</th>
             <th>Montant</th>
             <th>Date</th>
-            <th colspan="1">Actions</th>
+            <th colspan="2">Actions</th>
         </thead>
         <tbody class="text-center" style="font-size: 12px">
             <tr *ngFor="let cmd of cmds ">
                 <td>{{ cmd.Produits.design}}</td>
                 <td>{{ cmd.qte }}</td>
+                <!-- <td>
+                  <input type="number" value="{{ cmd.qte }}">
+                </td> -->
                 <td>{{  cmd.Produits.pu}}</td>
                 <td>{{ cmd.qte * cmd.Produits.pu }}</td>
                 <td>{{ cmd.createdAt | date }}</td>
+                <!-- <td><a><i class="fa text-danger fa-trash-alt" (click)="editMode()" aria-hidden="true"></i></a></td>
+                <td><a><i class="fa text-danger fa-trash-alt" (click)="deleteCommandeById(cmd.id)" aria-hidden="true"></i></a></td> -->
                 <td><a><i class="fa text-danger fa-trash-alt" (click)="deleteCommandeById(cmd.id)" aria-hidden="true"></i></a></td>
  
             </tr>

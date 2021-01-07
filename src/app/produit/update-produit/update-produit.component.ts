@@ -18,7 +18,6 @@ export class UpdateProduitComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    console.log(form.value);
     const produit = new Produit(this.produitEdit.id,form.value.design,form.value.pu,form.value.stock);
     console.log(produit); 
     this.produitService.updateProduit(this.produitEdit.id,produit).subscribe(

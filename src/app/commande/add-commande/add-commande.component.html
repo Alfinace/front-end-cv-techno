@@ -1,10 +1,14 @@
 <div class=" card bg-light mt-5" style="margin:0 auto; width:1000px;height: auto;">
-     <div class="card-header bg-info  p-3" style="color: rgb(190, 10, 70);position: relative;">
-        <span style="position: absolute;right: 10px;"><i class="fas fa-cart-plus fa-2x fa-fw"></i></span>
-        <h4 class="mb-0 text-light  text-uppercase" style="font-weight:bold;"> Faitez-vous le commande  </h4>
+     <div class="card-header bg-primary  p-3" style="position: relative;">
+       
+        <a style="position: absolute;right: 20px;" class="text-light"  [routerLink]="['/commande/list']" routerLinkActive="router-link-active"><i class="fas fa-cart-plus fa-2x fa-fw"></i></a>
+        <h6 class="mb-0 text-light  text-uppercase" style="font-weight:bold;"> 
+          Faitez-vous le commande pour <strong class="text-lowercase">{{ currentClient.lastName }} {{ currentClient.firstName }}</strong> 
+        </h6>
     </div>
     <table class="table table-hover table-sm">
         <thead class="text-center text-uppercase" style="font-size: 15px">
+            <th> Status</th>
             <th>Numero</th>
             <th>Designation</th>
             <th>Stock</th>
@@ -13,6 +17,9 @@
         </thead>
         <tbody class="text-center" style="font-size: 12px">
             <tr *ngFor="let produit of produits | slice:startIndex:endIndex">
+                <td>
+                  <i *ngIf="produit.check" class="fa fa-check-square  text-primary"></i>
+                </td>
                 <td>{{ produit.id }}</td>
                 <td>{{ produit.design }}</td>
                 <td>{{ produit.stock }}</td>
@@ -22,8 +29,8 @@
                       <!-- <input type="number"
                         class="form-control form-control-sm" min="0" max="{{produit.stock}}" name="quantite" id="" value="0" ngModel required style="width: 70px;" placeholder=""> -->
 
-                    <a (click)="addPanier(form,produit.id)" *ngIf="!produit.check"><i class="fa fa-cart-plus fa-2x text-info" aria-hidden="true"></i></a>
-                    <a  *ngIf="produit.check" class="text-success text-uppercase"><i class="fa fa-check" aria-hidden="true"></i> commande</a>
+                    <a (click)="addPanier(form,produit.id)" *ngIf="!produit.check"><i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+                    <a  *ngIf="produit.check" class="text-primary text-uppercase"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></a>
                     </form>
                 </td>
             </tr>
@@ -55,7 +62,7 @@
     </div>
     <br>
     <div style="text-align: center;">
-    <button mat-button mat-raised-button  [routerLink]="['/commande/list']" routerLinkActive="router-link-active" >Voir panier</button>
+    
 </div>
     <br>
     <br>

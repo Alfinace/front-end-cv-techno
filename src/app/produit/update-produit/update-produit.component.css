@@ -7,3 +7,9 @@ label{
 .btn:active{
     transform: scale(0.8);
 }
+
+.ng-invalid{
+border-color: brown;
+background-color: red;
+
+}
