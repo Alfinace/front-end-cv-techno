@@ -66,13 +66,13 @@
    </a>
    
    <table class="table table-hover table-sm">
-       <thead class="text-center text-uppercase" style="font-size: 15px">
-           <th>Numero facture</th>
+       <thead class="text-center text-uppercase" style="font-size: 10px">
+           <th>N° facture</th>
            <th>Client</th>
            <th>Date de commande</th>
            <th colspan="3">Actions</th>
        </thead>
-       <tbody class="text-center" style="font-size: 12px;position: relative;">
+       <tbody class="text-center" style="font-size: 9px;position: relative;">
            <tr *ngFor="let commande of commandes | slice:startIndex:endIndex">
                <td>{{ commande.numFacture }}</td>
                <td class="text-left">{{ commande.Clients.lastName }} {{ commande.Clients.firstName }}</td>

@@ -1,36 +1,33 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import { CommandeService } from '../../services/commande.service';
-import { ProduitService } from '../../services/produit.service';
+import { CommandeService } from 'src/app/services/commande.service';
 
 @Component({
-    selector: 'app-widget-area',
-    templateUrl: './area.component.html',
-    styleUrls: ['./area.component.css'],
+  selector: 'app-widget-spline',
+  templateUrl: './widget-spline.component.html',
+  styleUrls: ['./widget-spline.component.css']
 })
-export class AreaComponent implements OnInit {
-    is = false;
-    constructor(private produitService: ProduitService) {}
+export class WidgetSplineComponent implements OnInit {
+
+  is = false;
+    constructor(private commandeService: CommandeService) {}
     Highcharts = Highcharts;
     ngOnInit(): void {
         this.getData().then(res  =>{
          const data_x = [];
          const data_y = [];
-         res.data.rows.forEach(row => {
-             data_x.push(row.design);
-             data_y.push(parseInt(row.stock));
+         res.data.forEach(row => {
+             data_x.push(row.created);
+             data_y.push(row.nbrs);
          });
             this.is = false
             var dataSeries = [];
             dataSeries.push({
-               name: 'Nombre de produit commandé',
+               name: 'Nombre de produit',
                data: data_y,
                y: 0,
-               color: '#007bff'
+               color: 'rgb(24, 73, 104)'
             })
-            console.log(res.data.rows);
-            
             this.chartOptions.series = dataSeries;
             this.chartOptions.xAxis.categories = data_x
             this.is = true
@@ -38,20 +35,20 @@ export class AreaComponent implements OnInit {
     }
     
     getData(): any{
-      return this.produitService.getAllProduitForChart().toPromise().then(res => {
+      return this.commandeService.commandeForChart().toPromise().then(res => {
          return res
       })
     }
     chartOptions = {
         chart: {
-            type: 'spline',
+            type: 'area',
             scrollablePlotArea: {
                minWidth: 600,
                scrollPositionX: 1
            }
         },
         title: {
-            text: 'Statistque du commande effectue',
+            text: 'Statistque du commande effectue par jour',
         },
         xAxis: {
             categories: [],

@@ -1,12 +1,97 @@
 <div class="grid-container">
     <h1 class="mat-h5 font-weight-bolder">Tableau de bord</h1>
-    <mat-grid-list cols="0" rowHeight="400px">
+    <mat-grid-list cols="4" rowHeight="130px">
+        <mat-grid-tile>
+            <mat-card class="dashboard-card top-card top-card-primary ">
+                <mat-card-content class="dashboard-card-content">
+                    tableau
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <mat-card class="dashboard-card top-card top-card-secondary">
+                <mat-card-content class="dashboard-card-content">
+
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-card class="dashboard-card top-card top-card-success ">
+                <mat-card-content class="dashboard-card-content">
+
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-card class="dashboard-card top-card top-card-warning bg-dark">
+                <mat-card-content class="dashboard-card-content">
+
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="0" rowHeight="500px">
         <mat-grid-tile>
             <mat-card class="dashboard-card">
-                <mat-card-header>
-                    <mat-card-title>
-                    </mat-card-title>
-                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <app-widget-spline></app-widget-spline>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <mat-grid-list cols="0" rowHeight="400px">
+                <mat-grid-tile>
+                    <mat-card class="dashboard-card">
+                        <mat-card-header>
+                            <mat-card-subtitle>
+                                <h4 class="text-uppercase text-center text-primary">Liste de la derniere commande</h4>
+                            </mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-content class="dashboard-card-content">
+
+                            <table class="table table-hover table-sm">
+                                <thead class="text-center text-uppercase" style="font-size: 12px">
+                                    <th>Client</th>
+                                    <th>date</th>
+                                </thead>
+                                <tbody class="text-center" style="font-size: 9px;position: relative;">
+                                    <tr *ngFor="let commande of commandes | slice:startIndex:endIndex">
+                                        <td class="text-left">{{ commande.Clients.lastName }}
+                                            {{ commande.Clients.firstName }}
+                                        </td>
+                                        <td>{{ commande.createdAt | date }}</td>
+                                        <!-- <td><a (click)="open(shower, commande.numFacture)"><i class="fas text-primary fa-eye "></i></a><td> -->
+                                    </tr>
+                                    <tr class="text-center text-danger" *ngIf="commandes.length === 0"
+                                        style="height: 150px">
+                                        <td colspan="7">{{ msg_empty_table }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </mat-card-content>
+                    </mat-card>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+        <div class="col-lg-8">
+            <mat-grid-list cols="0" rowHeight="400px">
+                <mat-grid-tile>
+                    <mat-card class="dashboard-card">
+                        <mat-card-content class="dashboard-card-content">
+                            <app-widget-pie></app-widget-pie>
+                        </mat-card-content>
+                    </mat-card>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+    </div>
+    <mat-grid-list cols="0" rowHeight="700px">
+        <mat-grid-tile>
+            <mat-card class="dashboard-card">
                 <mat-card-content class="dashboard-card-content">
                     <app-widget-area></app-widget-area>
                 </mat-card-content>

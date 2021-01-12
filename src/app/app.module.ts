@@ -46,6 +46,8 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { AreaComponent } from './widgets/area/area.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { ChiffreAffaireComponent } from './commande/chiffre-affaire/chiffre-affaire.component';
+import { WidgetPieComponent } from './widgets/pie/widget-pie/widget-pie.component';
+import { WidgetSplineComponent } from './widgets/spline/widget-spline/widget-spline.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +71,8 @@ import { ChiffreAffaireComponent } from './commande/chiffre-affaire/chiffre-affa
     CommandeListComponent,
     AreaComponent,
     ChiffreAffaireComponent,
+    WidgetPieComponent,
+    WidgetSplineComponent,
   ],
   imports: [
     BrowserModule,

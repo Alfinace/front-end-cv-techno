@@ -26,6 +26,9 @@ export class ProduitService {
   getAllProduit(page?: number, limit?: number){
     return this.webReqService.get(`produit/list?page=${page}&limit=${limit}`);
   }
+  getAllProduitForChart(){
+    return this.webReqService.get(`produit/list/chart`);
+  }
   searchProduit(keyWord: any){
     return this.webReqService.get(`produit/search?key_word=${keyWord}`);
   }

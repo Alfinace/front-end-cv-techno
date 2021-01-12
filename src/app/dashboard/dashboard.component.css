@@ -18,4 +18,15 @@
 
 .dashboard-card-content {
   text-align: center;
+  position: relative;
+  
 }
+
+.top-card{
+  border-top: 8px solid rgb(24, 73, 104);
+  transition: box-shadow 0.5s ease;
+}
+.top-card:hover{
+  box-shadow: -3px 5px 10px rgb(121, 119, 119);
+}
+

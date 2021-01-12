@@ -1,27 +1,29 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import { CommandeService } from '../../services/commande.service';
-import { ProduitService } from '../../services/produit.service';
+import { CommandeService } from 'src/app/services/commande.service';
 
 @Component({
-    selector: 'app-widget-area',
-    templateUrl: './area.component.html',
-    styleUrls: ['./area.component.css'],
+  selector: 'app-widget-pie',
+  templateUrl: './widget-pie.component.html',
+  styleUrls: ['./widget-pie.component.css']
 })
-export class AreaComponent implements OnInit {
-    is = false;
-    constructor(private produitService: ProduitService) {}
+export class WidgetPieComponent implements OnInit {
+  is = false;
+    constructor(private commandeService: CommandeService) {}
     Highcharts = Highcharts;
     ngOnInit(): void {
         this.getData().then(res  =>{
          const data_x = [];
          const data_y = [];
-         res.data.rows.forEach(row => {
-             data_x.push(row.design);
-             data_y.push(parseInt(row.stock));
+         console.log(res);
+         
+         res.data.forEach(row => {
+             data_x.push(row.lastName+" "+ row.firstName);
+             data_y.push(parseInt(row.montant));
          });
             this.is = false
+            console.log(data_y);
+            
             var dataSeries = [];
             dataSeries.push({
                name: 'Nombre de produit commandé',
@@ -29,8 +31,6 @@ export class AreaComponent implements OnInit {
                y: 0,
                color: '#007bff'
             })
-            console.log(res.data.rows);
-            
             this.chartOptions.series = dataSeries;
             this.chartOptions.xAxis.categories = data_x
             this.is = true
@@ -38,13 +38,15 @@ export class AreaComponent implements OnInit {
     }
     
     getData(): any{
-      return this.produitService.getAllProduitForChart().toPromise().then(res => {
+      
+      return this.commandeService.commandeForChiffreAffaire('').toPromise().then(res => {
+        console.log(res);
          return res
       })
     }
     chartOptions = {
         chart: {
-            type: 'spline',
+            type: 'bar',
             scrollablePlotArea: {
                minWidth: 600,
                scrollPositionX: 1
@@ -84,4 +86,5 @@ export class AreaComponent implements OnInit {
         },
         series: [],
     };
+
 }

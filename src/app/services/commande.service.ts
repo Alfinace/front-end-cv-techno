@@ -27,7 +27,7 @@ export class CommandeService {
   commandeDeleteByFacture(num_facture){
     return this.webReqService.delete(`command/delete/byfacture?num_facture=${num_facture}`);
   }
-  commandeForChiffreAffaire(year?: number){
+  commandeForChiffreAffaire(year?: any){
     return this.webReqService.get(`command/chiffre/affaire?year=${year}`);
   }
   commandeDeleteByIdCommande(commande_id){
