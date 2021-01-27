@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Produit } from 'src/app/models/produit';
 import { ProduitService } from 'src/app/services/produit.service';
@@ -16,13 +16,17 @@ import { Client } from 'src/app/models/client';
     styleUrls: ['./add-commande.component.css'],
 })
 export class AddCommandeComponent implements OnInit {
+    
     produits = [];
+    produits_session = [];
     currentClient : any;
     size = 10;
     maxPage:number;
     numberPage :number;
     startIndex: number;
     endIndex: number;
+    count_panier = 0;
+    @Output() eventCount = new EventEmitter<number>();
     constructor(
         private commandeService: CommandeService,
         private userService: UserService,
@@ -32,6 +36,8 @@ export class AddCommandeComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.count_panier = JSON.parse(sessionStorage.getItem('panier')).length;
+        
         this.getList();
         this.startIndex = 0;
         this.endIndex = this.size;
@@ -112,6 +118,9 @@ export class AddCommandeComponent implements OnInit {
             currentData = currentData.concat(newData);
             sessionStorage.setItem('panier', JSON.stringify(currentData));
         }
+        this.count_panier  = currentData.length + 1;
+        
+        this.eventCount.emit(this.count_panier)
         this.getList()
     }
 

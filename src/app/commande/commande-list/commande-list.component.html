@@ -2,7 +2,7 @@
     <div class="card-header bg-primary text-center p-2">
        <h4 class="mb-0 text-white text-uppercase"> Liste du commande   </h4>
    </div>
-   <div class="row" style="transform: scale(0.8);">
+   <div class="row" style="transform: scale(0.9);">
        <div class="col-lg-4 text-center">
             <h6 class="text-center mt-3 text-uppercase text-underline">Mode de recherche</h6>
             <form class="text-center">
@@ -51,10 +51,10 @@
               </div>
         </div>
         <div class="  "  style="width:300px">
-          <div class="form-group" >
+          <div class="form-group">
               <label for=""></label>
-              <select class="form-control form-control-sm text-dark" name="" (change)="changeClient()"  id="" [(ngModel)]='clientID'>
-                  <option value="" selected >Selectionnez un client</option>
+              <select style="font-size: 15px;" class="custom-select custom-select-lg text-dark" name="" (change)="changeClient()"  id="" [(ngModel)]='clientID'>
+                  <option value="0" selected >--------selectionnez un client------</option>
                   <option *ngFor="let client of clients" value="{{client.id}}">{{ client.lastName }} {{ client.firstName }}</option>
               </select>
           </div>
@@ -72,7 +72,7 @@
            <th>Date de commande</th>
            <th colspan="3">Actions</th>
        </thead>
-       <tbody class="text-center" style="font-size: 9px;position: relative;">
+       <tbody class="text-center" style="font-size: 11px;position: relative;">
            <tr *ngFor="let commande of commandes | slice:startIndex:endIndex">
                <td>{{ commande.numFacture }}</td>
                <td class="text-left">{{ commande.Clients.lastName }} {{ commande.Clients.firstName }}</td>
@@ -132,6 +132,9 @@
       </button>
   </div>
   <div class="modal-body">
+    <div class=" alert alert-sm alert-success" *ngIf="success_message !==''">{{ success_message }}</div>
+    <div class=" alert alert-sm alert-success" *ngIf="error_message !==''">{{ error_message }}</div>
+    <div class=" alert alert-sm alert-warning" *ngIf="warning_message !==''">{{ warning_message }}</div>
     <table class="table table-hover table-sm ">
         <thead class="text-center text-uppercase" style="font-size: 12px">
             <th>Designation</th>
@@ -142,7 +145,7 @@
             <th colspan="2">Actions</th>
         </thead>
         <tbody class="text-center" style="font-size: 12px">
-            <tr *ngFor="let cmd of cmds ">
+            <tr *ngFor="let cmd of cmds; let i = index ">
                 <td>{{ cmd.Produits.design}}</td>
                 <td>{{ cmd.qte }}</td>
                 <!-- <td>
@@ -151,8 +154,8 @@
                 <td>{{  cmd.Produits.pu}}</td>
                 <td>{{ cmd.qte * cmd.Produits.pu }}</td>
                 <td>{{ cmd.createdAt | date }}</td>
-                <!-- <td><a><i class="fa text-danger fa-trash-alt" (click)="editMode()" aria-hidden="true"></i></a></td>
-                <td><a><i class="fa text-danger fa-trash-alt" (click)="deleteCommandeById(cmd.id)" aria-hidden="true"></i></a></td> -->
+                <td ><a (click)="editMode(i)"><i class="fa text-warning fa-pencil-alt" aria-hidden="true"></i></a></td>
+                <!-- <td><a><i class="fa text-danger fa-trash-alt" (click)="deleteCommandeById(cmd.id)" aria-hidden="true"></i></a></td> -->
                 <td><a><i class="fa text-danger fa-trash-alt" (click)="deleteCommandeById(cmd.id)" aria-hidden="true"></i></a></td>
  
             </tr>
@@ -161,6 +164,14 @@
   </div>
   <div class="modal-footer">
     <div class="btn-group">
+        <button
+        *ngIf="isThereChange"
+            class="btn btn-primary btn-sm"
+            (click)="validafte()"
+        >
+            Régerer un facture
+        </button>
+
         <button
             class="btn btn-danger btn-sm"
             (click)=" modal.close('Save click')"

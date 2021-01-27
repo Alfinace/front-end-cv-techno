@@ -40,7 +40,6 @@ export class WidgetPieComponent implements OnInit {
     getData(): any{
       
       return this.commandeService.commandeForChiffreAffaire('').toPromise().then(res => {
-        console.log(res);
          return res
       })
     }
@@ -53,7 +52,7 @@ export class WidgetPieComponent implements OnInit {
            }
         },
         title: {
-            text: 'Statistque du commande effectue',
+            text: 'Statistque du chiffre d\'affaire',
         },
         xAxis: {
             categories: [],

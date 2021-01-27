@@ -14,7 +14,7 @@ import { UserService } from '../services/user.service';
 export class DashboardComponent implements OnInit{
     Highcharts: typeof Highcharts = Highcharts;
      data = [];
-    commandes: any;
+    commandes = [];
     msg_empty_table = "Aucune commande";
     startIndex: number;
     endIndex: number;
@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit{
     getList(page?: number): void {
         this.commandeService.list().subscribe(
             (observe: any) => {
+
                 if (observe.list.length > 0 ) {
                     this.commandes = observe.list;
                     console.log(this.commandes);

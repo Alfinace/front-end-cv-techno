@@ -9,6 +9,9 @@ export class CommandeService {
   addCommande(command: any) {
     return this.webReqService.post(`command`,command);
   }
+  updateCommande(id:number,qte: any) {
+    return this.webReqService.put(`command/${id}/edit`,qte);
+  }
   listForCommand(page?: number, limit?: number){
     return this.webReqService.get(`command/add?page=${page}&limit=${limit}`);
   }

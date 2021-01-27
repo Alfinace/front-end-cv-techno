@@ -26,7 +26,7 @@ export class WidgetSplineComponent implements OnInit {
                name: 'Nombre de produit',
                data: data_y,
                y: 0,
-               color: 'rgb(24, 73, 104)'
+               color: 'rgb(204, 73, 104)'
             })
             this.chartOptions.series = dataSeries;
             this.chartOptions.xAxis.categories = data_x
@@ -49,6 +49,7 @@ export class WidgetSplineComponent implements OnInit {
         },
         title: {
             text: 'Statistque du commande effectue par jour',
+            color: '#eee'
         },
         xAxis: {
             categories: [],

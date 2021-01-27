@@ -8,15 +8,26 @@ import { Client } from 'src/app/models/client';
 import { ClientService } from 'src/app/services/client.service';
 import { CommandeService } from 'src/app/services/commande.service';
 import { UserService } from 'src/app/services/user.service';
-
+import * as $ from 'jquery'
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { NumberToLetterService } from 'src/app/services/numberToLetter.service';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
     selector: 'app-commande-list',
     templateUrl: './commande-list.component.html',
     styleUrls: ['./commande-list.component.css'],
 })
 export class CommandeListComponent implements OnInit {
+
+    isThereChange = false;
     msg_empty_table = "Aucune commande"
+    error_message = '';
+    success_message = '';
+    warning_message = '';
+    facture = <any>[];
     // valeur: number;
+    price_total = 0;
     isLoading = true
     clients: [];
     clientID: number;
@@ -40,6 +51,7 @@ export class CommandeListComponent implements OnInit {
     month: number;
     years: Array<any>;
     year :number;
+    currentClient: Client;
     months = [
          [1,'Janvier'],
          [2,'Fervier'],
@@ -60,10 +72,12 @@ export class CommandeListComponent implements OnInit {
         private userService: UserService,
         private activedRoute: ActivatedRoute,
         private router: Router,
+        private numberToLetterService: NumberToLetterService,
         private modalService: NgbModal
     ) {}
 
     ngOnInit(): void {
+        this.clientID = 0
         this.getList();
         this.startIndex = 0;
         this.endIndex = this.size;
@@ -110,11 +124,15 @@ export class CommandeListComponent implements OnInit {
 
     }
     detailCommande(index: number){
+        this.currentNumFact = index;
+        this.error_message = '';
+        this.success_message = '';
+        this.warning_message = '';
         this.commandeService.commandeByFacture(index).subscribe(
             (data: any) => {
                 this.cmds = data.command;
                 this.currentName = this.cmds[0].Clients.lastName;
-                console.log(this.cmds);
+    
 
             },
             (error: HttpErrorResponse) => {
@@ -244,6 +262,7 @@ export class CommandeListComponent implements OnInit {
 
     openComfirmDelete(content, index) {
         this.numFacture = index;
+        this.isThereChange = false;
         this.modalService
             .open(content, { ariaLabelledBy: 'modal-basic-title' })
     }
@@ -301,7 +320,29 @@ export class CommandeListComponent implements OnInit {
         }
     }
 
-    editMode(id){
+    editMode(id: number){
+        let newQte = parseInt(prompt("Veuillez rentrer le quantité commandé!",`${this.cmds[id].qte}`));
+        if (newQte - this.cmds[id].qte == 0) {
+            this.warning_message ="Aucune modification effectué";
+            this.isThereChange = false;
+        }else{
+            this.commandeService.updateCommande(this.cmds[id].id,{qte : newQte}).subscribe((res)=>{
+                this.detailCommande(this.cmds[id].numFacture)
+                this.success_message = 'Succée! un commande est à jour';
+                this.error_message = '';
+            },
+            (error: HttpErrorResponse)=>{
+                this.error_message = error.error.error_msg;
+                this.success_message;
+            }
+            );
+            this.isThereChange = true;
+        }
+        setTimeout(()=>{
+            this.success_message = '';
+            this.error_message = '';
+            this.warning_message = '';
+        },5000)
 
     }
     changeClient(){
@@ -339,5 +380,162 @@ export class CommandeListComponent implements OnInit {
         this.end_date = null;
         this.start_date = null;
         this.clientID = null;
+    }
+
+    validafte() {
+        this.commandeService.commandeByFacture(this.currentNumFact)
+            .subscribe(
+                (result: any) => {
+                    
+                    this.currentClient = result.command[0].Clients;
+                    this.facture = result.command;
+                    this.generatePDF(this.facture);
+                    this.isThereChange = false;
+                },
+                (error: HttpErrorResponse) => {
+                    console.log(error);
+                }
+            );
+    }
+    generatePDF(data) {
+        pdfMake.createPdf(this.getDocumentDefinition()).open();
+    }
+
+    getDocumentDefinition() {
+        return {
+            content: [
+                {
+                    text: 'FACTURE',
+                    bold: true,
+                    fontSize: 20,
+                    aligment: 'center',
+                    margin: [210, 10, 10, 50],
+                    decoration: 'underline',
+                },
+                {
+                    columns: [
+                        {
+                            text: 'N° CLIENT:',
+                            style: ['name', 'prefixe'],
+                        },
+                        {
+                            text: this.currentClient.id,
+                            style: 'name',
+                            marginLeft: -170,
+                        },
+                    ],
+                },
+                {
+                    columns: [
+                        {
+                            text: 'NOM:',
+                            style: ['name', 'prefixe'],
+                        },
+                        {
+                            text:
+                                this.currentClient.lastName +
+                                ' ' +
+                                this.currentClient.firstName,
+                            style: 'name',
+                            marginLeft: -170,
+                        },
+                    ],
+                },
+                {
+                    columns: [
+                        {
+                            text: 'CONTACT:',
+                            style: ['name', 'prefixe'],
+                        },
+                        {
+                            text: this.currentClient.contact,
+                            style: 'name',
+                            marginLeft: -170,
+                        },
+                    ],
+                },
+                {
+                    table: {
+                        headersRow: 2,
+                        widths: ['auto', '*', '*', '*'],
+                        body: [
+                            [
+                                {
+                                    text: 'DESIGNATION',
+                                    style: 'tableHeader',
+                                },
+                                {
+                                    text: 'PRIX UNITAIRE',
+                                    style: 'tableHeader',
+                                },
+                                {
+                                    text: 'QUANTITE',
+                                    style: 'tableHeader',
+                                },
+                                {
+                                    text: 'MONTANT',
+                                    style: 'tableHeader',
+                                },
+                            ],
+                            ...this.facture.map((fac) => {
+                                this.price_total =
+                                    this.price_total +
+                                    fac.Produits.pu * fac.qte;
+                                console.log(this.price_total);
+
+                                return [
+                                    fac.Produits.design,
+                                    fac.Produits.pu,
+                                    fac.qte,
+                                    fac.Produits.pu * fac.qte,
+                                ];
+                            }),
+                            [
+                                {
+                                    text: '',
+                                    colSpan: 2,
+                                },
+                                {},
+                                {
+                                    text: 'TOTAL',
+                                    style: 'tableHeader',
+                                },
+                                {
+                                    text: this.price_total + ' Ariary',
+                                    style: 'tableHeader',
+                                },
+                            ],
+                        ],
+                    },
+                },
+                {
+                    columns: [
+                        {
+                            text:
+                                'ARRETEE LA PRESENTE FACTURE A LA SOMME  DE ' +
+                                this.numberToLetterService
+                                    .NumberToLetter(this.price_total)
+                                    .toLocaleUpperCase() +
+                                ' ARIARY',
+                            marginTop: 10,
+                            bold: false,
+                            style: ['name'],
+                        },
+                    ],
+                },
+            ],
+            styles: {
+                tableHeader: {
+                    bold: true,
+                },
+                name: {
+                    fontSize: 12,
+                    marginBottom: 5,
+                },
+                prefixe: {
+                    decoration: 'underline',
+                },
+            },
+        };
     }
 }

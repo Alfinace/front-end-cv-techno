@@ -17,14 +17,17 @@ export class AreaComponent implements OnInit {
         this.getData().then(res  =>{
          const data_x = [];
          const data_y = [];
-         res.data.rows.forEach(row => {
-             data_x.push(row.design);
-             data_y.push(parseInt(row.stock));
-         });
+         if (res) {
+            res.data.rows.forEach(row => {
+                data_x.push(row.design);
+                data_y.push(parseInt(row.stock));
+            });
+         }
+         
             this.is = false
             var dataSeries = [];
             dataSeries.push({
-               name: 'Nombre de produit commandé',
+               name: 'Nombre de produit',
                data: data_y,
                y: 0,
                color: '#007bff'
@@ -39,6 +42,8 @@ export class AreaComponent implements OnInit {
     
     getData(): any{
       return this.produitService.getAllProduitForChart().toPromise().then(res => {
+          console.log(res);
+          
          return res
       })
     }
@@ -51,7 +56,7 @@ export class AreaComponent implements OnInit {
            }
         },
         title: {
-            text: 'Statistque du commande effectue',
+            text: 'Statistque du produit',
         },
         xAxis: {
             categories: [],

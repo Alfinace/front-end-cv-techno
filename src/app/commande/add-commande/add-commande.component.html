@@ -1,9 +1,9 @@
 <div class=" card bg-light mt-5" style="margin:0 auto; width:1000px;height: auto;">
      <div class="card-header bg-primary  p-3" style="position: relative;">
-       
+       {{ count_panier }}
         <a style="position: absolute;right: 20px;" class="text-light"  [routerLink]="['/commande/list']" routerLinkActive="router-link-active"><i class="fas fa-cart-plus fa-2x fa-fw"></i></a>
         <h6 class="mb-0 text-light  text-uppercase" style="font-weight:bold;"> 
-          Faitez-vous le commande pour <strong class="text-lowercase">{{ currentClient.lastName }} {{ currentClient.firstName }}</strong> 
+          Faitez-vous le commande pour =>  <strong class="text-lowercase">{{ currentClient.lastName }} {{ currentClient.firstName }}</strong> 
         </h6>
     </div>
     <table class="table table-hover table-sm">
