@@ -35,7 +35,7 @@ export class CommandeListComponent implements OnInit {
     mode_date = true;
     start_date : any;
     end_date: any;
-    size = 30;
+    size = 10;
     maxPage: number;
     numberPage: number;
     startIndex: number;
@@ -333,7 +333,7 @@ export class CommandeListComponent implements OnInit {
             },
             (error: HttpErrorResponse)=>{
                 this.error_message = error.error.error_msg;
-                this.success_message;
+                this.success_message='';
             }
             );
             this.isThereChange = true;

@@ -9,6 +9,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Router } from '@angular/router';
 import { NumberToLetterService } from 'src/app/services/numberToLetter.service';
+import { Command } from '../../models/command';
 import {
     NgbActiveModal,
     NgbModal,
@@ -32,6 +33,11 @@ export class ListPanierComponent implements OnInit {
     indexElementDelete = null;
     isBtnWait = false;
     isWait = true;
+    size = 7;
+    maxPage:number;
+    numberPage :number;
+    startIndex: number;
+    endIndex: number;
     constructor(
         private produitService: ProduitService,
         private commandeService: CommandeService,
@@ -41,16 +47,23 @@ export class ListPanierComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        var data = <any>[];
-        data = JSON.parse(sessionStorage.getItem('panier'));
-        this.fetchData(data);
+        this.startIndex = 0;
+        this.endIndex = this.size;
+        this.numberPage = 1
+        this.getData();
         var time = setInterval(()=>{
             if (!sessionStorage.getItem('client_id')) {
-                this.router.navigateByUrl('/commande/create')
+                this.router.navigateByUrl('/commande/historique')
                 clearInterval(time)
             }
           },2000)
     }
+    getData() {
+        var data = <any>[];
+        data = JSON.parse(sessionStorage.getItem('panier'));
+        this.fetchData(data);
+    }
+
 
     open(content, index) {
         this.indexElementDelete = index;
@@ -60,12 +73,20 @@ export class ListPanierComponent implements OnInit {
     }
 
     update_panier() {
-        const data = ([] = JSON.parse(sessionStorage.getItem('panier')));
+        let  data =[];
+        data = ([] = JSON.parse(sessionStorage.getItem('panier')));
+        
         const panierUpdate = {
             produitId: this.onePanierEditable.id,
             qte: this.onePanierEditable.qte,
         };
-        data.splice(this.onePanierEditable.index, 1, panierUpdate);
+        console.log(this.onePanierEditable);
+        
+        data.map((panier)=>{
+            if (panier.produitId == this.onePanierEditable.id) {
+                panier.qte =  this.onePanierEditable.qte
+            }
+        })
         sessionStorage.setItem('panier', JSON.stringify(data));
         this.fetchData(data);
     }
@@ -105,26 +126,35 @@ export class ListPanierComponent implements OnInit {
         } else {
             // tslint:disable-next-line: prefer-for-of
             for (let i = 0; i < data.length; i++) {
-                const panier = data[i];
                 this.produitService
-                    .getOneProduit(panier.produitId)
+                    .getOneProduit(data[i].produitId)
                     .subscribe((produit: any) => {
-                        var data_tmp = {
+                        var data_tmp = [{
                             id: produit.data.id,
                             design: produit.data.design,
                             pu: produit.data.pu,
-                            quantite: panier.qte,
-                        };
-                        price_total =
-                            price_total + data_tmp.pu * data_tmp.quantite;
-                        data_temp.push(data_tmp);
+                            quantite: data[i].qte,
+                        }];
+                        data_temp = [...data_tmp, ...data_temp];
                         this.isWait = false;
-                        this.priceTotal = price_total;
+                        price_total = price_total + data_tmp[0].pu * data_tmp[0].quantite;
+                        this.priceTotal = price_total
+                    },(error: HttpErrorResponse)=>{
+                        console.error(error.message);
+                        
+                    },
+                    ()=>{
+                        this.isWait = false;
+                        this.paniers = data_temp;
                     });
             }
         }
-        this.isWait = false;
-        this.paniers = data_temp;
+       
+    }
+    getArrayFromNumber(len:number){
+        let l = parseInt(((len/10)+ 0.5).toFixed(0))
+        this.maxPage = l;
+        return new Array(l);
     }
     deleteItem(index: number) {
         let paniers = <any>[];
@@ -135,6 +165,23 @@ export class ListPanierComponent implements OnInit {
         this.paniers = [];
         this.fetchData(paniers);
         this.priceTotal = 0
+    }
+    navigate(num_page: number){
+        this.numberPage = num_page;
+        this.endIndex =  this.size *num_page
+        this.startIndex = this.endIndex - this.size
+    }
+
+    nextPage(){
+        this.numberPage = this.numberPage + 1;
+        this.startIndex = this.endIndex
+        this.endIndex= this.startIndex + this.size
+    }
+
+    prevPage(){
+        this.numberPage = this.numberPage - 1;
+        this.endIndex = this.startIndex
+        this.startIndex= this.endIndex - this.size
     }
 
     validate() {

@@ -11,7 +11,8 @@ import { UserService } from '../../services/user.service';
 })
 export class ChoixClientComponent implements OnInit {
 clients: Client[];
-clientID: number
+oneClient: Client = null;
+clientID: number= null
 @Output() eventNextStep = new EventEmitter<any>()
   constructor(private clientService: ClientService,
     private userService: UserService) { }
@@ -37,6 +38,14 @@ clientID: number
   next(){
     const Obj={step:1,clientID:this.clientID}
     this.eventNextStep.emit(Obj)
+  }  
+  show(value: number){
+    this.clientID = value;
+    let client = this.clients.filter((item)=>{
+      if (item.id == this.clientID) {
+        return item
+      }
+    });
+    this.oneClient = client[0]
   }
-
 }
