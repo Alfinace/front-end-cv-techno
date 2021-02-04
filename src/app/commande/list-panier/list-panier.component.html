@@ -22,7 +22,11 @@
             En attente reponse au serveur ...
         </div>
     </div>
-    <div class="card-header bg-primary  p-2">
+    <div class="card-header bg-primary  p-2" style="position: relative;">
+        <a style="position: absolute;right: 20px;" class="text-light"  
+        [routerLink]="['/commande/create']" 
+        routerLinkActive="router-link-active">
+            <i class="fas fa-cart-plus fa-2x fa-fw"></i></a>
         <h5 class=" text-white text-uppercase">Panier du commande</h5>
     </div>
     <div class="card-body border-top">

@@ -77,9 +77,4 @@ export class NavComponent implements OnInit {
             outlet.activatedRouteData.animation
         );
     }
-    fnEventCount(value) {
-      console.log('tonga'+value);
-      ;
-        this.count_panier = value;
-    }
 }

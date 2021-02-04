@@ -1,5 +1,5 @@
 <div
-    class="card bg-light mt-5"
+    class="card bg-light mt-2"
     style="margin: 0 auto; width: 1000px; height: auto"
 >
     <div class="card-header bg-primary text-center p-2">
@@ -68,7 +68,7 @@
     </table>
     <br />
     <br />
-    <ul class="pagination justify-content-left" *ngIf="keyWord === ''">
+    <ul class="pagination pagination-sm justify-content-left" *ngIf="keyWord === ''">
         <li class="page-item">
             <a
                 class="page-link"
@@ -123,7 +123,7 @@
             class="btn btn-secondary"
             (click)="c('Close click')"
         >
-            Close
+            Fermer
         </button>
     </div>
 </ng-template>

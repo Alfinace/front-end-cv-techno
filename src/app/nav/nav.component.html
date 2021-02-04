@@ -40,7 +40,7 @@
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
             <h5 style="font-size: 20px;font-variant: small-caps;" class="text-light">Gestion de commande</h5>
-            <span class=" text-light"> {{ count_panier }} panier</span>
+            <!-- <span class=" text-light"> {{ count_panier }} panier</span> -->
             <div class="d-flex flex-row-reverse ">
                 <!-- <button mat-raised-button style="transform: scale(0.7);" (click)="onLogout()">Logout</button> -->
                 <button mat-raised-button class="bg-danger text-light" style="transform: scale(0.7);"
@@ -56,6 +56,6 @@
           <router-outlet #outlet="outlet"></router-outlet>
         </main> -->
         <!-- <flash-messages></flash-messages> -->
-          <router-outlet #outlet="outlet" (even) ="fnEventCount($event)"></router-outlet>
+          <router-outlet #outlet="outlet" ></router-outlet>
         </mat-sidenav-content>
 </mat-sidenav-container>

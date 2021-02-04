@@ -59,7 +59,6 @@ export class ListClientComponent implements OnInit {
     this.getList(page);
   }
   getLastList(value: Client){
-    console.log(value);
     this.getList(this.pages.length)
   }
 
@@ -67,7 +66,6 @@ export class ListClientComponent implements OnInit {
     this.clientService.getAllClient(page,this.limit).subscribe(
       (observe: any) => {
         const data = observe.data.rows;
-
         this.clients = data;
         // tslint:disable-next-line: radix
         let pages = parseInt(observe.data.count) / this.limit;

@@ -19,14 +19,12 @@ export class AddCommandeComponent implements OnInit {
     
     produits = [];
     produits_session = [];
-    currentClient : any;
+    currentClient : any ="";
     size = 10;
     maxPage:number;
     numberPage :number;
     startIndex: number;
     endIndex: number;
-    count_panier = 0;
-    @Output() eventCount = new EventEmitter<number>();
     constructor(
         private commandeService: CommandeService,
         private userService: UserService,
@@ -36,8 +34,6 @@ export class AddCommandeComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.count_panier = JSON.parse(sessionStorage.getItem('panier')).length;
-        
         this.getList();
         this.startIndex = 0;
         this.endIndex = this.size;
@@ -100,7 +96,7 @@ export class AddCommandeComponent implements OnInit {
               }
           }
         } 
-         return item
+        return item
     }
     addPanier(form: NgForm, id: number): void {
         let { quantite } = form.value;
@@ -118,9 +114,6 @@ export class AddCommandeComponent implements OnInit {
             currentData = currentData.concat(newData);
             sessionStorage.setItem('panier', JSON.stringify(currentData));
         }
-        this.count_panier  = currentData.length + 1;
-        
-        this.eventCount.emit(this.count_panier)
         this.getList()
     }
 

@@ -4,7 +4,8 @@
     <div class="d-flex justify-content-center" >
         <div class="  "  style="width:300px">
             <div class="form-group" >
-                <select class="form-control form-control-lg text-dark" name="" id="" [(ngModel)]='clientID'>
+                <select  name="" id="" [(ngModel)]='clientID'>
+                    <option><div> <input type="text" src="" placeholder="f"></div></option>
                     <option *ngFor="let client of clients" value="{{client.id}}">{{ client.lastName }} {{ client.firstName }}</option>
                 </select>
             </div>

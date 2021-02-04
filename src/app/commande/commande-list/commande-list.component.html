@@ -76,7 +76,7 @@
            <tr *ngFor="let commande of commandes | slice:startIndex:endIndex">
                <td>{{ commande.numFacture }}</td>
                <td class="text-left">{{ commande.Clients.lastName }} {{ commande.Clients.firstName }}</td>
-               <td>{{ commande.createdAt | date }}</td>
+               <td>{{ commande.createdAt | date:'d/MM/y'}}</td>
                <td><a (click)="open(shower, commande.numFacture)"><i class="fas text-primary fa-eye "></i></a><td>
                <td><a><i class="fa text-danger fa-trash-alt" (click)="openComfirmDelete(confirm,commande.numFacture)" aria-hidden="true"></i></a></td>
            </tr>
@@ -153,7 +153,7 @@
                 </td> -->
                 <td>{{  cmd.Produits.pu}}</td>
                 <td>{{ cmd.qte * cmd.Produits.pu }}</td>
-                <td>{{ cmd.createdAt | date }}</td>
+                <td>{{ cmd.createdAt | date:'d/MM/y' }}</td>
                 <td ><a (click)="editMode(i)"><i class="fa text-warning fa-pencil-alt" aria-hidden="true"></i></a></td>
                 <!-- <td><a><i class="fa text-danger fa-trash-alt" (click)="deleteCommandeById(cmd.id)" aria-hidden="true"></i></a></td> -->
                 <td><a><i class="fa text-danger fa-trash-alt" (click)="deleteCommandeById(cmd.id)" aria-hidden="true"></i></a></td>
