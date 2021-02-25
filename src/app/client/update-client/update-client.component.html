@@ -1,4 +1,7 @@
 <div>
+  <div class="alert alert-danger" *ngIf="error" >
+    Il y a de champ n'est pas validé!
+  </div>
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
       <hr>
         <div class="form-group">
@@ -13,6 +16,6 @@
             <input type="text"
               class="form-control form-control-lg" name="contact" [(ngModel)]=" clientEdit.contact " required id="" aria-describedby="helpId" placeholder="Numéro téléphonique">
           </div>
-          <button type="submit"  class="btn btn-primary btn-block btn-lg">Mettre à jour</button>
+          <button type="submit"   class="btn btn-primary btn-block btn-lg">Mettre à jour</button>
     </form>
 </div>

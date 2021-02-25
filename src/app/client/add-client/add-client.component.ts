@@ -11,6 +11,7 @@ import { ClientService } from 'src/app/services/client.service';
 export class AddClientComponent implements OnInit {
 
   client: Client;
+  error: boolean= false;
   constructor(private clientService: ClientService) { }
   @Output() newItemClient = new EventEmitter<any>()
   ngOnInit(): void {
@@ -19,16 +20,20 @@ export class AddClientComponent implements OnInit {
     this.newItemClient.emit(value)
   }
   onSubmit(formulaire: NgForm){
-    console.log(formulaire.value);
+    if (!formulaire.valid) {
+      this.error = true
+    } else {
     const client = new Client(null, formulaire.value.lastName, formulaire.value.firstName , formulaire.value.contact);
     this.clientService.addClient(client).subscribe(
       (result: any) => {
         this.addNewClient(result.data);
+        formulaire.resetForm();
       },
       (error: any) => {
         console.log(error);
       }
     )
   }
+}
 
 }

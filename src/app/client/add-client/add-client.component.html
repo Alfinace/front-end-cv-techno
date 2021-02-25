@@ -1,4 +1,7 @@
 <div>
+  <div class="alert alert-danger" *ngIf="error" >
+    Il y a de champ n'est pas validé!
+  </div>
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
       <hr>
         <div class="form-group">

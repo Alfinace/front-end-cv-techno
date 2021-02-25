@@ -11,7 +11,7 @@ import { ClientService } from '../../services/client.service';
 export class UpdateClientComponent implements OnInit {
   @Input() clientEdit: Client;
   @Output() eventUpdateClient = new EventEmitter<any>();
-
+  error: boolean = false; 
   constructor(private clientService: ClientService) { }
 
   ngOnInit(): void {
@@ -19,7 +19,10 @@ export class UpdateClientComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    const client = new Client(this.clientEdit.id, form.value.lastName, form.value.firstName, form.value.contact);
+    if (!form.valid) {
+      this.error = true
+    } else {
+      const client = new Client(this.clientEdit.id, form.value.lastName, form.value.firstName, form.value.contact);
     this.clientService.updateClient(this.clientEdit.id, client).subscribe(
       (result: any) => {
         this.eventAfterUpdate(result.data);
@@ -28,6 +31,8 @@ export class UpdateClientComponent implements OnInit {
         console.log(error.message);
       }
     );
+    }
+    
   }
   eventAfterUpdate(value: any ){
     this.eventUpdateClient.emit(value);
